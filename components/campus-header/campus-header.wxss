@@ -1,0 +1,11 @@
+:host { display: block; }
+.campus-header { display: flex; align-items: center; justify-content: space-between; box-sizing: border-box; min-height: 116rpx; padding: 16rpx 30rpx; background: #faf9f4; border-bottom: 1rpx solid #e1e6d8; }
+.campus-header__brand { display: flex; align-items: center; min-width: 0; }
+.campus-header__brand image { width: 72rpx; height: 72rpx; border-radius: 18rpx; flex-shrink: 0; margin-right: 14rpx; }
+.campus-header__name { font-size: 34rpx; color: #2e513e; font-weight: 700; }
+.campus-header__tagline { font-size: 19rpx; margin-top: 5rpx; color: #849078; }
+.campus-header__picker { max-width: 270rpx; margin-left: 12rpx; }
+.campus-header__school { box-sizing: border-box; display: flex; align-items: center; padding: 15rpx 16rpx; background: #fffefa; border: 1rpx solid #dae3d0; border-radius: 14rpx; font-size: 24rpx; color: #4e6747; }
+.campus-header__school text { margin-left: 14rpx; color: #87967d; }
+.campus-context { display: flex; align-items: center; padding: 10rpx 32rpx; gap: 10rpx; font-size: 22rpx; color: #586e4b; background: #f0f2e7; }
+.campus-context__dot { width: 10rpx; height: 10rpx; flex-shrink: 0; border-radius: 50%; background: #7c9a65; }

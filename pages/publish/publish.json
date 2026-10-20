@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "发布",
+  "usingComponents": {
+    "campus-nav": "/components/campus-nav/campus-nav",
+    "campus-header": "/components/campus-header/campus-header"
+  }
+}

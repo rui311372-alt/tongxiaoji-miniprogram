@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "同校集 · 我的",
+  "usingComponents": {
+    "campus-header": "/components/campus-header/campus-header",
+    "campus-nav": "/components/campus-nav/campus-nav"
+  }
+}

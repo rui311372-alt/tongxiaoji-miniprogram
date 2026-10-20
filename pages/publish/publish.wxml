@@ -1,0 +1,39 @@
+<campus-header school-id="{{school.id}}" disabled="{{busy||checking}}" bind:schoolchange="onSchoolChanged" />
+<view class="page publish-page">
+  <view class="heading"><view class="section-title">发布到本校</view><view class="school-name">{{school.name}}</view></view>
+  <view class="notice">将发布到{{school.name}}，请核对学校与内容。</view>
+  <view class="publish-tabs"><button wx:for="{{tabs}}" wx:key="id" class="{{kind===item.id?'active':''}}" data-kind="{{item.id}}" bindtap="changeKind" disabled="{{busy||checking}}">{{item.label}}</button></view>
+  <view class="form-card">
+    <view class="school-confirm"><text>发布学校</text><view>{{school.name}}</view></view>
+    <view class="field"><view class="label">标题 <text>*</text></view><input value="{{draft.title||''}}" placeholder="{{kind==='product'?'例如：毕业出闲置台灯':kind==='wanted'?'例如：求一辆校园骑行自行车':'例如：数据库原理期末复习整理'}}" maxlength="60" data-field="title" bindinput="input" disabled="{{busy||checking}}"/></view>
+    <block wx:if="{{kind==='resource'||kind==='request'}}">
+      <view wx:if="{{kind==='resource'}}" class="field"><view class="label">适用专业 <text>*</text></view><picker range="{{majors}}" value="{{majorIndex}}" data-field="majorIndex" bindchange="select" disabled="{{busy||checking}}"><view class="picker-value">{{majors[majorIndex]}} <text>⌄</text></view></picker></view>
+      <view class="field"><view class="label">课程名称 <text>*</text></view><input value="{{draft.course||''}}" placeholder="请填写完整课程名" maxlength="50" data-field="course" bindinput="input" disabled="{{busy||checking}}"/></view>
+    </block>
+    <block wx:if="{{kind==='product'}}">
+      <view class="field"><view class="label">转让方式 <text>*</text></view><picker range="{{saleModes}}" value="{{saleModeIndex}}" data-field="saleModeIndex" bindchange="select" disabled="{{busy||checking}}"><view class="picker-value">{{saleModes[saleModeIndex]}} <text>⌄</text></view></picker></view>
+      <view class="form-grid"><view class="field"><view class="label">{{saleModeIndex===1?'起拍价格':'转让价格'}}（元）<text>*</text></view><input type="digit" value="{{draft.price||''}}" placeholder="0.00" maxlength="10" data-field="price" bindinput="input" disabled="{{busy||checking}}"/></view><view class="field"><view class="label">成色 <text>*</text></view><picker range="{{conditions}}" value="{{conditionIndex}}" data-field="conditionIndex" bindchange="select" disabled="{{busy||checking}}"><view class="picker-value">{{conditions[conditionIndex]}} <text>⌄</text></view></picker></view></view>
+      <block wx:if="{{saleModeIndex===1}}">
+        <view class="field"><view class="label">每次加价（元）<text>*</text></view><input type="digit" value="{{draft.increment||''}}" placeholder="0.01—10000 元" maxlength="10" data-field="increment" bindinput="input" disabled="{{busy||checking}}"/></view>
+        <view class="field"><view class="label">竞价截止时间 <text>*</text></view><view class="form-grid date-grid"><picker mode="date" value="{{endDate}}" start="{{dateMin}}" end="{{dateMax}}" bindchange="changeDate" disabled="{{busy||checking}}"><view class="picker-value">{{endDate}} <text>⌄</text></view></picker><picker mode="time" value="{{endTime}}" bindchange="changeTime" disabled="{{busy||checking}}"><view class="picker-value">{{endTime}} <text>⌄</text></view></picker></view><view class="field-note">截止时间须在未来 15 天内。仅模拟竞价，不收款。</view></view>
+      </block>
+    </block>
+    <view wx:if="{{kind==='wanted'}}" class="field"><view class="label">最高预算（元）<text>*</text></view><input type="digit" value="{{draft.budget||''}}" placeholder="例如：200" maxlength="10" data-field="budget" bindinput="input" disabled="{{busy||checking}}"/></view>
+    <view wx:if="{{kind!=='request'}}" class="field"><view class="label">分类 <text>*</text></view><picker range="{{categories}}" value="{{categoryIndex}}" data-field="categoryIndex" bindchange="select" disabled="{{busy||checking}}"><view class="picker-value">{{categories[categoryIndex]}} <text>⌄</text></view></picker></view>
+    <view wx:if="{{kind==='product'||kind==='wanted'}}" class="field"><view class="label">交接地点 <text>*</text></view><input value="{{draft.place||''}}" placeholder="例如：图书馆一楼大厅" maxlength="80" data-field="place" bindinput="input" disabled="{{busy||checking}}"/></view>
+    <view class="field"><view class="label">{{kind==='request'?'你需要哪方面帮助':kind==='wanted'?'物品要求与联系方式':'补充说明'}} <text>*</text></view><textarea value="{{draft.description||''}}" placeholder="{{kind==='product'?'请说明使用情况、配件和已知问题':kind==='wanted'?'说明规格、成色和预算，请勿填写敏感信息':'注明知识范围、适用课程和使用建议'}}" maxlength="{{kind==='request'||kind==='wanted'?1000:1500}}" auto-height data-field="description" bindinput="input" disabled="{{busy||checking}}"/></view>
+    <block wx:if="{{kind==='resource'}}">
+      <view class="field"><view class="label">资料正文</view><textarea class="body-input" value="{{draft.body||''}}" placeholder="粘贴有权分享的文字；已选择文件时可留空" maxlength="30000" auto-height data-field="body" bindinput="input" disabled="{{busy||checking}}"/><view class="field-note">文字正文与资料文件至少填写一项。</view></view>
+      <view class="upload-field"><button bindtap="chooseAttachment" disabled="{{busy||checking}}"><view class="upload-plus">＋</view><view class="upload-title">{{attachment?'重新选择资料文件':'选择资料文件'}}</view><view class="field-note">PDF / Word / Excel / PPT，不超过 5MB</view></button><view wx:if="{{attachment}}" class="selected-file"><view><text>{{attachment.name}}</text><view>{{attachment.sizeLabel}} · 发布时保存到本机</view></view><button class="remove-file" bindtap="removeAttachment" disabled="{{busy||checking}}">移除</button></view></view>
+    </block>
+    <block wx:if="{{kind==='product'}}">
+      <view class="upload-field"><button bindtap="choosePhoto" disabled="{{busy||checking||photos.length>=3}}"><view class="upload-plus">＋</view><view class="upload-title">选择商品照片</view><view class="field-note">相册或拍照，自动压缩，最多 3 张，每张不超过 5MB</view></button><view wx:if="{{photos.length}}" class="photo-preview"><view wx:for="{{photos}}" wx:key="tempPath" class="photo-item"><image src="{{item.tempPath}}" mode="aspectFill" data-path="{{item.tempPath}}" bindtap="previewPhoto"/><button data-index="{{index}}" bindtap="removePhoto" disabled="{{busy||checking}}">×</button><view>{{item.sizeLabel}}</view></view></view><view class="field-note">请核对实物与照片；不选照片时会标注“暂无实物图”。</view></view>
+    </block>
+    <checkbox-group class="confirmation" bindchange="changeConfirmed"><label><checkbox value="confirmed" checked="{{confirmed}}" color="#33654f" disabled="{{busy||checking}}"/><text>我确认学校和内容无误，仅分享有权发布的内容。</text></label></checkbox-group>
+    <view wx:if="{{checking}}" class="field-note">正在检查文件，请稍候…</view>
+    <view wx:if="{{error}}" class="error" role="alert">{{error}}</view>
+    <button class="submit" bindtap="submit" loading="{{busy||checking}}" disabled="{{busy||checking||!confirmed}}">{{busy?'正在发布…':checking?'正在检查文件…':'发布到'+school.name}}</button>
+  </view>
+  <view class="footnote">发布与文件保存在这台设备，仅用于课堂体验，不会自动同步到网站或其他同学设备。</view>
+</view>
+<campus-nav active="publish" disabled="{{busy||checking}}" bind:select="onMainNav"/>

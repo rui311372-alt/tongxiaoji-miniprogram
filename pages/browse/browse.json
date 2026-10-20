@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "campus-header": "/components/campus-header/campus-header",
+    "campus-nav": "/components/campus-nav/campus-nav"
+  },
+  "navigationBarTitleText": "本校内容",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark"
+}

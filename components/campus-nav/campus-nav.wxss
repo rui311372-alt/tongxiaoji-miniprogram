@@ -1,0 +1,90 @@
+/* The same five destinations as the mobile web app. */
+:host { display: block; }
+.campus-nav-space {
+  height: 76px;
+  height: calc(76px + constant(safe-area-inset-bottom));
+  height: calc(76px + env(safe-area-inset-bottom));
+  pointer-events: none;
+}
+.campus-nav {
+  position: fixed;
+  z-index: 80;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  box-sizing: border-box;
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+  background: rgba(255, 254, 250, 0.97);
+  border-top: 1px solid #e0e5dc;
+  box-shadow: 0 -4px 20px rgba(41, 67, 35, 0.045);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+.campus-nav .campus-nav__row {
+  display: flex;
+  align-items: center;
+  height: 76px;
+  padding: 5px 10px 7px;
+  box-sizing: border-box;
+}
+/* Explicit width/margins override native style:v2 button defaults. */
+.campus-nav .campus-nav__button {
+  display: flex !important;
+  flex: 1 1 0 !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 0 !important;
+  max-width: none !important;
+  width: auto !important;
+  height: 60px !important;
+  margin: 0 1px !important;
+  padding: 4px 2px !important;
+  border: 0;
+  border-radius: 8px;
+  background: transparent !important;
+  color: #76806f;
+  box-sizing: border-box;
+  box-shadow: none;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 17px;
+}
+.campus-nav .campus-nav__button::after { border: 0; }
+.campus-nav .campus-nav__button.is-active {
+  color: #28583f;
+  font-weight: 600;
+  background: #eaf1e9 !important;
+}
+.campus-nav .campus-nav__button.is-disabled { opacity: 0.6; }
+.campus-nav .campus-nav__button.campus-nav__pressed { opacity: 0.65; }
+.campus-nav__icon { display: block; width: 22px; height: 22px; margin-bottom: 5px; flex-shrink: 0; }
+.campus-nav__label { display: block; white-space: nowrap; }
+.campus-nav .campus-nav__publish {
+  flex: 0 0 61px !important;
+  align-self: center;
+  overflow: visible;
+  margin: -6px 4px 0 !important;
+  color: #2c654c;
+}
+.campus-nav__publish .campus-nav__label { margin-top: 3px; }
+.campus-nav__plus {
+  position: relative;
+  width: 37px;
+  height: 37px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: #2c654c;
+  box-shadow: 0 4px 9px rgba(23, 105, 79, 0.13);
+}
+.campus-nav__plus-line {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: 1px;
+  background: #fff;
+  transform: translate(-50%, -50%);
+}
+.campus-nav__plus-horizontal { width: 20px; height: 2px; }
+.campus-nav__plus-vertical { width: 2px; height: 20px; }

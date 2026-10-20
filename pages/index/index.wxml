@@ -1,0 +1,12 @@
+<view class="entry-shell">
+  <view class="entry-header"><view class="entry-brand"><image src="/assets/icon.png" mode="aspectFit" /><text>同校集</text></view><text class="header-caption">你的校园日常</text></view>
+  <view class="entry-main">
+    <view class="entry-intro"><view class="mascot-scene" bindtap="greet"><view class="wave-viewport"><image class="wave-sprite" src="/assets/mascot-wave.png" mode="scaleToFill" /></view><text wx:if="{{greeting}}" class="mascot-bubble">{{greeting}}</text></view><view class="entry-title">欢迎来到同校集</view><view class="entry-subtitle">找资料，淘闲置，认识同校的你。</view></view>
+    <view class="school-label">选择你的学校</view><picker mode="selector" range="{{schools}}" range-key="name" value="{{schoolIndex}}" bindchange="onSchoolChange"><view class="school-choice"><text>{{school.name}}</text><text class="school-arrow">⌄</text></view></picker>
+    <view wx:if="{{schoolHint}}" class="school-hint">{{schoolHint}}</view>
+    <view class="entry-destinations"><button class="entry-destination resource-entry" data-section="resources" bindtap="openSection"><view class="entry-dest-icon"><image src="/assets/nav/library-white.png" mode="aspectFit" /></view><view class="entry-dest-copy"><view class="entry-dest-title">学习资料</view><view class="entry-dest-note">课程笔记、复习整理和同学互助</view></view><text class="entry-arrow">↗</text></button><button class="entry-destination market-entry" data-section="market" bindtap="openSection"><view class="entry-dest-icon"><image src="/assets/nav/market-active.png" mode="aspectFit" /></view><view class="entry-dest-copy"><view class="entry-dest-title">校园集市</view><view class="entry-dest-note">看看附近同学正在转让的好物</view></view><text class="entry-arrow">↗</text></button></view>
+    <view class="entry-ad"><text class="ad-label">广告</text><text>校园合作展示位</text><text class="ad-reserved">预留</text></view>
+    <button class="guide-link" bindtap="showGuides">ⓘ 使用指南</button>
+  </view>
+  <view class="entry-bottom">课程演示 · 认证与交易均为模拟体验</view>
+</view>

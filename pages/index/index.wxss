@@ -1,0 +1,36 @@
+page { background: #faf9f4; }
+.entry-shell { min-height: 100vh; display: flex; flex-direction: column; color: #2e513e; }
+.entry-header { display: flex; align-items: center; justify-content: space-between; padding: 20rpx 34rpx; min-height: 96rpx; }
+.entry-brand { display: flex; align-items: center; gap: 13rpx; font-size: 34rpx; font-weight: 600; letter-spacing: 2rpx; }
+.entry-brand image { width: 60rpx; height: 60rpx; border-radius: 15rpx; }
+.header-caption { font-size: 23rpx; color: #809075; }
+.entry-main { width: 100%; padding: 12rpx 34rpx 22rpx; margin-top: auto; margin-bottom: auto; }
+.entry-intro { text-align: center; }
+.mascot-scene { position: relative; width: 260rpx; height: 230rpx; margin: 0 auto 10rpx; }
+.wave-viewport { width:230rpx; height:230rpx; margin:0 auto; overflow:hidden; }
+.wave-sprite { display:block; width:920rpx; max-width:none; height:230rpx; animation:campus-wave 1.2s steps(4,end) infinite; will-change:transform; }
+@keyframes campus-wave { from { transform:translateX(0); } to { transform:translateX(-920rpx); } }
+.mascot-bubble { position: absolute; left: 50%; top: 0; transform: translateX(-50%); padding: 9rpx 18rpx; border: 1rpx solid #dce3d2; border-radius: 14rpx; background: #fffefa; font-size: 22rpx; white-space: nowrap; }
+.entry-title { font-size: 42rpx; line-height: 1.45; font-weight: 600; margin: 10rpx 0 8rpx; }
+.entry-subtitle { font-size: 24rpx; color: #7b8870; line-height: 1.7; margin-bottom: 28rpx; }
+.school-label { font-size: 22rpx; color: #7b886f; margin-bottom: 14rpx; }
+.school-choice { display: flex; justify-content: space-between; align-items: center; min-height: 90rpx; padding: 18rpx 23rpx; border: 1rpx solid #dce3d2; border-radius: 15rpx; background: #fffefa; font-size: 28rpx; }
+.school-arrow { color: #829474; margin-left: 14rpx; }
+.school-hint { font-size:20rpx; line-height:1.7; color:#9b8259; padding:10rpx 4rpx 0; }
+.entry-destinations { margin: 26rpx 0 32rpx; }
+.entry-shell button.entry-destination { display: flex; align-items: center; width: 100%; margin: 0 0 16rpx; padding: 22rpx 24rpx; min-height: 116rpx; text-align: left; border-radius: 18rpx; line-height: 1.5; }
+.resource-entry { background: #2d624a; color: #fffefa; }
+.market-entry { background: #edf0e3; color: #466441; border: 1rpx solid #dbe3cc; }
+.entry-dest-icon { width: 56rpx; height: 56rpx; flex-shrink: 0; border-radius: 13rpx; display: flex; align-items: center; justify-content: center; background: #ffffff12; margin-right: 18rpx; }
+.market-entry .entry-dest-icon { background: #e2e8d6; }
+.entry-dest-icon image { width: 35rpx; height: 35rpx; }
+.entry-dest-copy { flex: 1; min-width: 0; }
+.entry-dest-title { font-size: 32rpx; font-weight: 550; }
+.entry-dest-note { font-size: 22rpx; line-height: 1.7; margin-top: 7rpx; color: #cedbc3; }
+.market-entry .entry-dest-note { color: #7a886d; }
+.entry-arrow { font-size: 36rpx; margin-left: 12rpx; }
+.entry-ad { display: flex; align-items: center; gap: 18rpx; padding: 16rpx; font-size: 22rpx; color: #89917b; border: 1rpx solid #e4e6d8; border-radius: 12rpx; background: #f3f2e9; }
+.ad-label { font-size: 19rpx; padding: 3rpx 8rpx; border: 1rpx solid #d9decd; border-radius: 6rpx; }
+.ad-reserved { margin-left: auto; font-size: 20rpx; color: #a1a78f; }
+.entry-shell button.guide-link { width: auto; margin: 24rpx auto 0; padding: 0 15rpx; color: #869378; background: transparent; font-size: 23rpx; line-height: 2; }
+.entry-bottom { padding: 24rpx 15rpx 36rpx; text-align: center; color: #939d87; font-size: 21rpx; }

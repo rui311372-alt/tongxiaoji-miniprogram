@@ -1,0 +1,18 @@
+<view class="campus-nav-space" aria-hidden="true"></view>
+<view class="campus-nav">
+  <view class="campus-nav__row">
+    <button wx:for="{{tabs}}" wx:key="key"
+      class="campus-nav__button {{active === item.key ? 'is-active' : ''}} {{item.key === 'publish' ? 'campus-nav__publish' : ''}} {{disabled ? 'is-disabled' : ''}}"
+      data-tab="{{item.key}}" bindtap="onSelect" disabled="{{disabled}}"
+      hover-class="campus-nav__pressed" aria-label="{{item.label}}">
+      <view wx:if="{{item.key === 'publish'}}" class="campus-nav__plus" aria-hidden="true">
+        <view class="campus-nav__plus-line campus-nav__plus-horizontal"></view>
+        <view class="campus-nav__plus-line campus-nav__plus-vertical"></view>
+      </view>
+      <image wx:else class="campus-nav__icon" mode="aspectFit"
+        src="{{'/assets/nav/' + item.key + (active === item.key ? '-active' : '') + '.png'}}"
+        aria-hidden="true"></image>
+      <text class="campus-nav__label">{{item.label}}</text>
+    </button>
+  </view>
+</view>

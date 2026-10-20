@@ -1,0 +1,9 @@
+page { background: #f8f7f2; color: #253d32; font-size: 28rpx; }
+view, button, input, text { box-sizing: border-box; }
+button { font-size: 28rpx; border-radius: 22rpx; }
+button::after { border: 0; }
+.page { padding: 32rpx 32rpx 64rpx; }
+.section-title { font-size: 34rpx; font-weight: 700; }
+.pill { display: inline-block; padding: 7rpx 14rpx; border-radius: 12rpx; background: #edf1e7; color: #4b674b; font-size: 22rpx; }
+.footnote { color: #879086; font-size: 22rpx; line-height: 1.8; text-align: center; margin: 40rpx 8rpx 0; }
+.empty { padding: 72rpx 24rpx; text-align: center; color: #79877c; line-height: 1.9; }

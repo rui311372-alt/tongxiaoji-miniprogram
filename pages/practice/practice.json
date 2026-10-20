@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "学习资料",
+  "navigationBarBackgroundColor": "#f8f7f2",
+  "navigationBarTextStyle": "black",
+  "usingComponents": {
+    "campus-nav": "/components/campus-nav/campus-nav",
+    "campus-header": "/components/campus-header/campus-header"
+  }
+}

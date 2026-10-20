@@ -1,0 +1,9 @@
+<campus-header school-id="{{school.id}}" disabled="{{busy}}" bind:schoolchange="onSchoolChanged" />
+<view class="page messages-page">
+  <view class="heading"><view class="section-title">聊清楚，再见面。</view><view class="school-name">{{school.name}}</view></view>
+  <view class="notice">这里是本机演示会话。回复由程序模拟，不会联系真实卖家。</view>
+  <view wx:if="{{error}}" class="error">{{error}}<button bindtap="refresh">重新读取</button></view>
+  <view wx:elif="{{!threads.length}}" class="empty-card"><view class="bubble-icon">聊</view><view class="empty-title">还没有会话</view><view class="empty-text">去二手集市看看，在物品详情点击联系卖家，体验模拟沟通。</view><button bindtap="goMarket">去二手集市</button></view>
+  <view wx:else class="thread-list"><button wx:for="{{threads}}" wx:key="id" class="thread" data-id="{{item.id}}" bindtap="open"><image wx:if="{{item.photo}}" class="thread-avatar" src="{{item.photo}}" mode="aspectFill" data-id="{{item.id}}" binderror="photoError"/><view wx:else class="thread-avatar placeholder">物</view><view class="thread-content"><view class="thread-head"><view class="thread-title">{{item.title}}</view><text>{{item.time}}</text></view><view class="conversation-school">{{item.schoolName}} · 模拟咨询</view><view class="last-message">{{item.last}}</view></view><text class="arrow">›</text></button></view>
+</view>
+<campus-nav active="messages" bind:select="onMainNav"/>

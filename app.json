@@ -1,0 +1,23 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/browse/browse",
+    "pages/detail/detail",
+    "pages/logs/logs",
+    "pages/practice/practice",
+    "pages/profile/profile",
+    "pages/publish/publish",
+    "pages/messages/messages",
+    "pages/chat/chat"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "同校集",
+    "navigationBarBackgroundColor": "#f8f7f2",
+    "backgroundColor": "#f8f7f2"
+  },
+  "style": "v2",
+  "componentFramework": "glass-easel",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

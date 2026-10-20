@@ -1,0 +1,90 @@
+<campus-header school-id="{{schoolId}}" bind:schoolchange="onSchoolChanged"/>
+<view class="page practice-page">
+  <view class="library-heading">
+    <view class="library-title">学习资料</view>
+    <view class="library-caption">{{schoolName}} · {{resourceCount}} 份整理，免费互助共享</view>
+  </view>
+  <view class="topic-shortcuts">
+    <button class="topic-card" data-topic="exam" bindtap="openTopic"><image class="topic-icon" src="/assets/nav/topic-review.png" /><view class="topic-copy"><view class="topic-title">期末冲刺</view><view class="topic-caption">{{outlineCount}} 份提纲</view></view></button>
+    <button class="topic-card active" data-topic="practice" bindtap="openTopic"><image class="topic-icon" src="/assets/nav/topic-practice.png" /><view class="topic-copy"><view class="topic-title">刷题练习</view><view class="topic-caption">64 道选择题</view></view></button>
+    <button class="topic-card" data-topic="requests" bindtap="openTopic"><image class="topic-icon" src="/assets/nav/topic-help.png" /><view class="topic-copy"><view class="topic-title">互助补齐</view><view class="topic-caption">{{requestCount}} 条求助</view></view></button>
+  </view>
+  <view class="library-subtabs">
+    <button class="library-subtab" data-tab="resources" bindtap="onLibraryTab">资料广场</button>
+    <button class="library-subtab active" data-tab="practice" bindtap="onLibraryTab">刷题练习</button>
+    <button class="library-subtab" data-tab="requests" bindtap="onLibraryTab">求资料</button>
+  </view>
+  <view class="practice-intro">
+    <view class="practice-badge">刷题练习</view>
+    <view class="practice-intro-title">按课程巩固知识</view>
+    <view class="practice-subtitle">4 门课程 · 64 道基础选择题 · 提交后看解析</view>
+    <view class="practice-boundary">原创基础练习，不代表本校考题；记录仅保存在当前设备。</view>
+  </view>
+  <view class="stats">
+    <view class="stat"><view class="stat-value">{{answeredCount}}<text class="stat-denominator">/{{scopedCount}}</text></view><view class="stat-caption">所选课程已练</view></view>
+    <view class="stat"><view class="stat-value">{{accuracy}}</view><view class="stat-caption">累计正确率</view></view>
+    <view class="stat"><view class="stat-value">{{wrongCount}}</view><view class="stat-caption">本校待巩固</view></view>
+  </view>
+  <view wx:if="{{!persistent}}" class="notice">暂时无法保存到设备。仍可继续本次练习，关闭后可能丢失未保存的记录。</view>
+  <picker range="{{courseOptions}}" value="{{courseIndex}}" bindchange="changeCourse">
+    <view class="course-picker"><view><text class="picker-label">练习课程</text><view class="picker-value">{{selectedCourse}}</view></view><text class="picker-arrow">切换 ▾</text></view>
+  </picker>
+  <view class="practice-tabs">
+    <button class="mode-tab {{mode === 'all' ? 'active' : ''}}" bindtap="practiceAll">按课程练</button>
+    <button class="mode-tab {{mode === 'wrong' ? 'active' : ''}}" bindtap="practiceWrong">错题回练 {{scopedWrongCount}}</button>
+  </view>
+  <view wx:if="{{current}}" class="question-card">
+    <view class="question-meta"><text class="question-topic">{{current.course}} · {{current.topic}}</text><text class="question-count">{{index + 1}}/{{questionCount}}</text></view>
+    <view class="progress-track"><view class="progress-fill" style="width: {{progressWidth}}%;"></view></view>
+    <view class="question-stem">{{current.stem}}</view>
+    <view class="option-list">
+      <button wx:for="{{options}}" wx:key="index" class="question-option {{item.status}}" data-index="{{item.index}}" bindtap="selectOption" aria-disabled="{{submitted}}">
+        <text class="option-letter">{{item.letter}}</text><text class="option-text">{{item.text}}</text>
+        <text wx:if="{{submitted && item.status === 'correct'}}" class="option-mark">✓</text>
+        <text wx:if="{{submitted && item.status === 'incorrect'}}" class="option-mark">×</text>
+      </button>
+    </view>
+    <view wx:if="{{submitted}}" class="explanation {{answeredCorrect ? 'explanation-correct' : 'explanation-wrong'}}">
+      <view class="explanation-title">{{answeredCorrect ? '答对了，继续保持！' : '记住这个知识点，下次再检验。'}}</view>
+      <view class="explanation-answer">正确答案：{{answerLetter}}</view>
+      <view class="explanation-body">{{current.explanation}}</view>
+      <view wx:if="{{!answeredCorrect}}" class="explanation-tip">已加入错题本；再次答对后，从待巩固列表移除。</view>
+    </view>
+    <view class="question-actions">
+      <button class="secondary-button" bindtap="previousQuestion" disabled="{{index === 0}}">上一题</button>
+      <button wx:if="{{!submitted}}" class="primary-button" bindtap="submitAnswer" disabled="{{!hasChoice}}">提交答案</button>
+      <button wx:elif="{{index < questionCount - 1}}" class="primary-button" bindtap="nextQuestion">下一题</button>
+      <button wx:else class="primary-button" bindtap="finishRound">本轮完成</button>
+    </view>
+  </view>
+  <view wx:else class="question-card empty-state">
+    <view class="empty-icon">✓</view>
+    <view class="empty-title">当前课程没有待巩固错题</view>
+    <view class="empty-note">答错的题会自动收集。也可以继续按课程练习。</view>
+    <button class="primary-button" bindtap="practiceAll">返回课程练习</button>
+  </view>
+  <view class="summary-card">
+    <view class="summary-heading"><text class="section-title">错题总结</text><text class="pill">{{wrongCount}} 题待巩固</text></view>
+    <view class="summary-note">按课程与知识点整理，针对薄弱处再练一次。</view>
+    <view wx:for="{{courseSummary}}" wx:key="course" class="course-summary">
+      <view class="summary-course-row"><text>{{item.course}}</text><text class="summary-count {{item.count ? 'has-wrong' : ''}}">{{item.count}} 题待巩固</text></view>
+      <view class="summary-progress">已练 {{item.answered}} / 16 题</view>
+      <view wx:if="{{item.count}}" class="topic-list"><text wx:for="{{item.topics}}" wx:for-item="topicItem" wx:key="topic" class="topic-pill">{{topicItem.topic}} · {{topicItem.count}}</text></view>
+    </view>
+    <button wx:if="{{wrongCount}}" class="summary-toggle" bindtap="toggleWrongDetails">{{showWrongDetails ? '收起错题与要点' : '查看错题与要点'}} {{showWrongDetails ? '▴' : '▾'}}</button>
+    <view wx:if="{{showWrongDetails}}" class="wrong-details">
+      <view wx:for="{{wrongItems}}" wx:key="id" class="wrong-item">
+        <view class="wrong-course">{{item.course}} · {{item.topic}}</view>
+        <view class="wrong-stem">{{item.stem}}</view>
+        <view class="wrong-answer">答案 {{item.answer}}：{{item.answerText}}</view>
+        <view class="wrong-explanation">{{item.explanation}}</view>
+        <button class="retry-button" data-id="{{item.id}}" bindtap="retryQuestion">重做这题</button>
+      </view>
+    </view>
+  </view>
+  <view class="record-note">正确率按每次提交累计，重复练习也计入。当前共提交 {{totalAttempts}} 次，答对 {{totalCorrect}} 次。</view>
+  <button class="clear-button" bindtap="clearProgress" disabled="{{!totalAttempts}}">清空本校练习记录</button>
+  <view class="footnote"><view>原创基础练习，不代表学校真题。</view><view>记录仅保存在当前微信设备，按学校分别保存。</view></view>
+</view>
+
+<campus-nav active="library" bind:select="onMainNav"/>

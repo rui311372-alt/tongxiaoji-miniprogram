@@ -1,0 +1,132 @@
+.campus-content { padding-top: 24rpx; }
+.feature-heading { padding: 26rpx 28rpx; background: #eff2e7; border: 1rpx solid #dce3d0; border-radius: 17rpx; }
+.feature-heading .section-title { font-size: 43rpx; color: #304b35; font-weight: 650; }
+.heading-caption { color: #8b987c; font-size: 23rpx; line-height: 1.7; margin-top: 10rpx; }
+.search { height: 88rpx; padding: 0 24rpx; margin-top: 26rpx; border: 1rpx solid #dce3d0; border-radius: 16rpx; background: #fffefa; font-size: 24rpx; }
+.topic-shortcuts { display: flex; gap: 13rpx; margin: 24rpx 0 22rpx; }
+.campus-content button.topic-card { flex: 1; min-width: 0; width: auto; margin: 0; padding: 20rpx 9rpx; line-height: 1.5; text-align: center; background: #f1f3e9; border: 1rpx solid #e0e6d5; border-radius: 16rpx; color: #526d42; }
+.topic-card image { width: 34rpx; height: 34rpx; display: block; margin: 0 auto 9rpx; }
+.topic-card view { font-size: 24rpx; font-weight: 600; }
+.topic-card text { display: block; font-size: 18rpx; color: #8a977c; margin-top: 7rpx; white-space: nowrap; }
+.campus-content button.topic-card.selected { background: #e6edd9; border-color: #afc296; }
+.sub-tabs { display: flex; border-bottom: 1rpx solid #e0e5d6; margin: 24rpx 0 26rpx; }
+.campus-content button.sub-tab { width: auto; flex: 1; min-width: 0; margin: 0; padding: 18rpx 6rpx; line-height: 1.6; background: transparent; color: #869477; border-radius: 0; font-size: 25rpx; border-bottom: 4rpx solid transparent; }
+.sub-tab text { font-size: 20rpx; color: #a2ad93; margin-left: 4rpx; }
+.campus-content button.sub-tab.active { color: #54783e; border-bottom-color: #779b54; font-weight: 650; }
+.list-heading { display: flex; justify-content: space-between; align-items: center; color: #465e37; font-size: 28rpx; margin: 24rpx 0; font-weight: 600; }
+.result-count { color: #9aa58b; font-size: 22rpx; font-weight: 400; }
+.resource-card { display: flex; padding: 25rpx 20rpx; margin-bottom: 20rpx; background: #fffefb; border: 1rpx solid #e2e7d9; border-radius: 19rpx; }
+.score { width: 112rpx; flex-shrink: 0; margin-right: 20rpx; padding-right: 17rpx; border-right: 1rpx solid #eceee5; display: flex; flex-direction: column; align-items: center; }
+.score-number { color: #9c7b30; font-size: 43rpx; line-height: 1.3; font-weight: 750; }
+.score-number.pending { font-size: 23rpx; color: #8b967c; margin-top: 9rpx; }
+.score-label { color: #9a967f; font-size: 18rpx; margin-top: 5rpx; }
+.gold { background: #f4ead1; color: #987629; border-radius: 7rpx; padding: 5rpx 6rpx; font-size: 18rpx; margin-top: 12rpx; white-space: nowrap; }
+.resource-body { flex: 1; min-width: 0; }
+.item-title { font-size: 28rpx; font-weight: 650; line-height: 1.6; word-break: break-all; margin-top: 10rpx; }
+.item-meta { font-size: 22rpx; line-height: 1.6; margin: 12rpx 0 0; color: #8b9584; }
+.item-description { color: #929b85; font-size: 22rpx; line-height: 1.7; margin-top: 10rpx; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.product-grid { display: flex; flex-wrap: wrap; justify-content: space-between; }
+.product-card { width: 48%; margin-bottom: 22rpx; border: 1rpx solid #e1e6d7; background: #fffefb; border-radius: 20rpx; overflow: hidden; }
+.product-image,.product-placeholder { display: block; width: 100%; height: 200rpx; background: #f0f1e8; }
+.product-placeholder { display: flex; align-items: center; justify-content: center; font-size: 22rpx; color: #9da58d; }
+.product-info { padding: 15rpx; }
+.product-title { min-height: 72rpx; max-height: 72rpx; font-size: 24rpx; line-height: 1.5; margin: 0 0 10rpx; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.price { color: #ad633e; font-size: 32rpx; font-weight: 700; margin-top: 12rpx; }
+.place { font-size: 20rpx; color: #8a9384; line-height: 1.6; margin-top: 10rpx; }
+.campus-content button.more { width: 100%; margin: 14rpx 0 0; background: #e8eddf; color: #486846; font-size: 25rpx; }
+.request-card { padding: 25rpx; border: 1rpx solid #e0e6d6; border-radius: 18rpx; background: #fffefa; margin-bottom: 22rpx; }
+.request-top { display: flex; align-items: center; justify-content: space-between; font-size: 21rpx; color: #8f9b80; }
+.request-description { color: #8a957f; font-size: 24rpx; line-height: 1.8; margin-top: 14rpx; white-space: pre-wrap; }
+.campus-content button.request-action { width: auto; margin: 18rpx 0 0 auto; padding: 0 16rpx; font-size: 23rpx; color: #5e7f42; background: #edf2e3; line-height: 2.2; }
+.error-box { padding: 24rpx; color: #a25c3a; background: #fff2e6; border-radius: 16rpx; font-size: 24rpx; margin-top: 22rpx; }
+
+/* The learning section keeps the same topic cards and tab geometry on every subpage. */
+.topic-shortcuts { display:flex; gap:13rpx; margin:24rpx 0 22rpx; }
+.page button.topic-card { display:flex; flex-direction:column; align-items:flex-start; flex:1; width:auto; min-width:0; margin:0; padding:17rpx 13rpx; gap:8rpx; line-height:1.5; text-align:left; background:#fffefa; border:1rpx solid #e0e6da; border-radius:14rpx; color:#526d42; }
+.topic-card image.topic-icon, .topic-card>image { display:block; width:34rpx; height:34rpx; flex-shrink:0; margin:0; }
+.topic-card .topic-title, .topic-card>view { font-size:24rpx; font-weight:550; }
+.topic-card .topic-copy { min-width:0; }
+.topic-card .topic-caption, .topic-card>text { display:block; color:#8a977c; font-size:19rpx; margin-top:5rpx; white-space:nowrap; }
+.page button.topic-card.active,.page button.topic-card.selected { border-color:#a9bf93; background:#f0f4e8; }
+.recent { display:flex; align-items:center; flex-wrap:wrap; gap:10rpx; color:#98a18f; font-size:20rpx; margin-top:16rpx; }
+.page button.tiny-chip,.page button.text-link { width:auto; margin:0; padding:8rpx 12rpx; background:transparent; color:#698253; font-size:22rpx; line-height:1.5; }
+.page button.tiny-chip { background:#eef1e5; border-radius:10rpx; font-size:20rpx; max-width:270rpx; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.collection-label { color:#8b987c; font-size:22rpx; margin:20rpx 0 12rpx; }
+.collection-scroll,.chips-scroll { white-space:nowrap; width:100%; }
+.collection-row,.chips { display:flex; gap:12rpx; padding-bottom:10rpx; }
+.page button.collection-chip,.page button.chip { flex-shrink:0; width:auto; margin:0; padding:12rpx 20rpx; font-size:22rpx; line-height:1.6; background:#f0f2e8; color:#7d8b6c; border:1rpx solid transparent; border-radius:12rpx; }
+.page button.collection-chip.selected,.page button.chip.selected,.page button.rated-toggle.selected { color:#50733b; background:#e6edda; border-color:#b8c99f; }
+.collection-intro { padding:22rpx; margin:18rpx 0; background:#eef2e5; border:1rpx solid #dce5cf; border-radius:16rpx; }
+.small-label { display:block; font-size:20rpx; color:#9a9e87; line-height:1.8; }
+.filters { border:1rpx solid #e1e6d6; border-radius:14rpx; margin:16rpx 0 20rpx; background:#fffefa; }
+.page button.filter-toggle { width:100%; margin:0; padding:20rpx; text-align:left; font-size:23rpx; line-height:1.6; color:#698250; background:transparent; display:flex; justify-content:space-between; }
+.filter-toggle text { color:#9ca78b; font-size:21rpx; }
+.filter-body { padding:0 18rpx 18rpx; }
+.filter-row { display:flex; flex-wrap:wrap; gap:12rpx; margin:10rpx 0 20rpx; }
+.filter-picker { flex:1; min-width:180rpx; font-size:22rpx; color:#748663; background:#fffefa; border:1rpx solid #e0e6d6; border-radius:12rpx; }
+.filter-picker view { padding:18rpx 15rpx; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.page button.rated-toggle { width:auto; margin:12rpx 0; font-size:22rpx; background:#f0f3e9; color:#798c64; line-height:1.7; padding:10rpx 16rpx; border:1rpx solid #e0e6d7; }
+.sort-picker { color:#81936c; font-size:21rpx; padding:12rpx; border:1rpx solid #e1e7d7; border-radius:10rpx; background:#fffefa; white-space:nowrap; }
+.result-count { margin-top:8rpx; }
+.page button.clear-filters { margin:-4rpx 0 20rpx; padding-left:0; font-size:22rpx; }
+.resource-wrapper { border:1rpx solid #e1e7d8; border-radius:18rpx; background:#fffefb; margin-bottom:22rpx; overflow:hidden; }
+.resource-wrapper .resource-card { border:0; border-radius:0; margin:0; padding-bottom:20rpx; }
+.resource-type { display:flex; justify-content:space-between; align-items:center; color:#a1ab95; font-size:19rpx; }
+.card-bottom { display:flex; align-items:center; gap:8rpx; border-top:1rpx solid #eef0e7; padding:13rpx 17rpx; }
+.author { color:#9da58e; font-size:19rpx; line-height:1.7; flex:1; min-width:0; word-break:break-all; }
+.page button.credit-pill { width:auto; margin:0; padding:4rpx 10rpx; font-size:18rpx; line-height:1.7; border-radius:30rpx; background:#edf2e4; color:#7d935d; white-space:nowrap; }
+.page button.save-icon { width:46rpx; height:46rpx; margin:0; padding:0; font-size:32rpx; line-height:46rpx; background:transparent; color:#9ca98c; }
+.page button.save-icon.selected { color:#af7a65; }
+.request-footer { display:flex; align-items:center; gap:12rpx; margin-top:18rpx; }
+.request-footer button.request-action { margin:0; }
+.resolve-link { padding:18rpx 0 0; font-size:22rpx; color:#668947; }
+.page button.small-primary { width:auto; margin:0; padding:15rpx 20rpx; background:#e9efde; color:#627e48; font-size:23rpx; line-height:1.6; }
+.wanted-heading { font-size:22rpx; line-height:1.8; color:#8d997c; display:flex; align-items:center; gap:18rpx; }
+.wanted-heading text { flex:1; }
+.product-info .price text { font-size:18rpx; color:#9aa58a; font-weight:400; margin-left:8rpx; }
+.product-bottom { padding:10rpx 16rpx; }
+.page button.compare-toggle { width:100%; margin:0; padding:12rpx 8rpx; background:#f3f5ed; color:#9ba98b; border-top:1rpx solid #e8edde; font-size:21rpx; border-radius:0; line-height:1.6; }
+.page button.compare-toggle.selected { color:#628448; background:#e8efde; }
+.auction-intro { background:#f3eedf; color:#9a8350; padding:22rpx; font-size:26rpx; line-height:1.8; border-radius:15rpx; margin:15rpx 0; }
+.auction-intro text { display:block; color:#a59b7d; font-size:20rpx; }
+.auction-state { color:#a18d5d; font-size:21rpx; margin-top:12rpx; }
+.comparison { border:1rpx solid #cbd9b6; border-radius:16rpx; margin:20rpx 0; background:#f0f4e8; padding:12rpx; }
+.comparison-heading { display:flex; justify-content:space-between; }
+.comparison-items { display:flex; gap:12rpx; padding:15rpx 3rpx; }
+.compare-item { flex:1; min-width:0; font-size:21rpx; line-height:1.7; color:#62794c; }
+.compare-item image { width:100%; height:105rpx; background:#fffefa; border-radius:10rpx; }
+.compare-item text { display:block; color:#8a9879; font-size:19rpx; margin-top:10rpx; }
+.tools-hint { margin-top:15rpx; color:#af7653; font-size:22rpx; }
+.market-controls { margin:20rpx 0; }
+.market-controls .chips { flex-wrap:wrap; gap:10rpx; }
+.market-controls button.chip { padding:10rpx 16rpx; }
+.market-tools { display:flex; justify-content:space-between; }
+.feature-heading { position:relative; overflow:hidden; background:linear-gradient(115deg,#e8efdd,#f5f4e9); border-color:#d8e2c9; box-shadow:0 9rpx 28rpx #516d3610; }
+.feature-heading .section-title { letter-spacing:2rpx; }
+.heading-caption { color:#77866a; }
+.quick-filters { display:flex; gap:13rpx; flex-wrap:wrap; margin:10rpx 0 18rpx; }
+.page button.filter-pill { width:auto; margin:0; padding:10rpx 16rpx; line-height:1.7; font-size:21rpx; background:#fffefa; color:#93a080; border:1rpx solid #e2e8d8; border-radius:30rpx; }
+.page button.filter-pill.active { background:#e8efdc; color:#6f8d4c; border-color:#bccfa2; }
+.page button.filter-pill.gold-active { background:#f6efdc; color:#a18a4f; border-color:#e6d7a9; }
+.resource-wrapper { box-shadow:0 7rpx 22rpx #455d2e05; }
+.page button.back-top { position:fixed; z-index:40; right:25rpx; bottom:calc(185rpx + env(safe-area-inset-bottom)); width:74rpx; height:74rpx; margin:0; padding:0; line-height:74rpx; background:#fffef9; color:#708f50; font-size:36rpx; border:1rpx solid #ccd9b8; border-radius:50%; box-shadow:0 6rpx 22rpx #4d653224; }
+.score { width:126rpx; padding:15rpx 14rpx 14rpx 0; margin-right:20rpx; border-right:1rpx solid #ececdf; justify-content:flex-start; }
+.score-caption { color:#aba181; font-size:17rpx; letter-spacing:1rpx; margin-bottom:9rpx; }
+.score-value-row { display:flex; align-items:baseline; gap:3rpx; }
+.score-number { font-size:45rpx; color:#a38946; line-height:1.15; letter-spacing:-1rpx; font-weight:750; }
+.score-denominator { color:#baaf91; font-size:17rpx; }
+.score-stars { position:relative; width:90rpx; color:#e1ddce; font-size:18rpx; letter-spacing:0; line-height:1.5; margin-top:10rpx; white-space:nowrap; }
+.score-stars>text { display:block; }
+.score-stars-fill { position:absolute; top:0; left:0; overflow:hidden; white-space:nowrap; color:#c3a35a; }
+.score-label { color:#b2ac96; font-size:17rpx; margin-top:8rpx; }
+.gold { margin-top:14rpx; color:#a08032; border:1rpx solid #e9d9ad; background:linear-gradient(130deg,#faf3df,#eee0b6); padding:7rpx 7rpx; border-radius:8rpx; box-shadow:0 4rpx 10rpx #a3864110; }
+.resource-card { background:linear-gradient(100deg,#fffdf5,#fffefb 30%); }
+
+.auction-state { display:flex; flex-wrap:wrap; align-items:center; gap:8rpx; margin-top:14rpx; }
+.auction-state>text { font-size:18rpx; color:#a3a38b; }
+.auction-card-status { font-size:19rpx; line-height:1.6; padding:4rpx 10rpx; border-radius:7rpx; background:#f0f2e9; color:#929783; }
+.auction-card-status.leading { color:#4f7f58; background:#e8f1e4; }
+.auction-card-status.outbid { color:#a27d42; background:#f9efda; }
+.auction-card-status.active { color:#8b8d59; background:#f3f1dd; }
+.auction-card-clock { color:#a3a189; font-size:19rpx; margin-top:10rpx; line-height:1.7; }
+.market-tools { flex-wrap:wrap; gap:8rpx; align-items:center; }
