@@ -2,12 +2,18 @@ const { schools } = require('../../utils/catalog');
 const { majors } = require('../../utils/majors');
 const community = require('../../utils/community');
 const files = require('../../utils/files');
+const mainNav = require('../../utils/main-nav');
 const tabs = [{ id: 'resource', label: '分享资料' }, { id: 'product', label: '发布闲置' }, { id: 'request', label: '求资料' }, { id: 'wanted', label: '求闲置' }];
 function pad(n) { return String(n).padStart(2, '0'); }
 function dateValue(date) { return date.getFullYear() + '-' + pad(date.getMonth() + 1) + '-' + pad(date.getDate()); }
 function timeValue(date) { return pad(date.getHours()) + ':' + pad(date.getMinutes()); }
 function defaults() { const now = new Date(), tomorrow = new Date(Date.now() + 86400000); return { dateMin: dateValue(now), dateMax: dateValue(new Date(Date.now() + 15 * 86400000)), endDate: dateValue(tomorrow), endTime: timeValue(tomorrow) }; }
 function sizeLabel(size) { return size >= 1024 * 1024 ? (size / 1024 / 1024).toFixed(1) + ' MB' : (size / 1024).toFixed(1) + ' KB'; }
+function draftSnapshot(data) {
+  const draft = {};
+  Object.keys(data.draft).sort().forEach(key => { const value = String(data.draft[key] || '').trim(); if (value) draft[key] = value; });
+  return JSON.stringify({ draft, majorIndex: data.majorIndex, categoryIndex: data.categoryIndex, conditionIndex: data.conditionIndex, saleModeIndex: data.saleModeIndex, photos: data.photos.map(row => row.tempPath), attachment: data.attachment && data.attachment.tempPath, endDate: data.endDate, endTime: data.endTime });
+}
 Page({
   data: { school: schools[0], tabs, kind: 'resource', majors, majorIndex: 0, categories: community.resourceCategories, categoryIndex: 0, conditions: community.conditions, conditionIndex: 0, saleModes: ['固定价格', '校园竞价'], saleModeIndex: 0, draft: { increment: '5' }, photos: [], attachment: null, confirmed: false, busy: false, checking: false, error: '', dateMin: '', dateMax: '', endDate: '', endTime: '' },
   onLoad(options) {
@@ -15,8 +21,10 @@ Page({
     if (tabs.some(row => row.id === options.kind)) this.chooseKind(options.kind);
     if (options.kind === 'auction') { this.chooseKind('product'); this.setData({ saleModeIndex: 1 }); }
     if (typeof options.course === 'string' && options.course.length <= 60) this.setData({ 'draft.course': options.course });
+    this._draftBaseline = draftSnapshot(this.data);
   },
   onShow() {
+    this._leaving = false;
     const school = schools.find(row => row.id === getApp().globalData.schoolId) || schools[0];
     if (this.data.school.id !== school.id) this.setData({ confirmed: false });
     this.setData({ school, dateMin: dateValue(new Date()), dateMax: dateValue(new Date(Date.now() + 15 * 86400000)) });
@@ -29,6 +37,7 @@ Page({
   chooseKind(kind) {
     this._generation++;
     this.setData(Object.assign({ kind, draft: { increment: '5' }, majorIndex: 0, categoryIndex: 0, conditionIndex: 0, saleModeIndex: 0, photos: [], attachment: null, confirmed: false, error: '', categories: kind === 'product' || kind === 'wanted' ? community.productCategories : community.resourceCategories }, defaults()));
+    this._draftBaseline = draftSnapshot(this.data);
   },
   changeKind(event) {
     if (this.data.busy || this.data.checking || event.currentTarget.dataset.kind === this.data.kind) return;
@@ -103,6 +112,7 @@ Page({
       if (this._disposed) throw new Error('页面已关闭，发布未保存。');
       community.publish(kind, data); committed = true; this._pendingPaths = [];
       this.setData({ draft: { increment: '5' }, photos: [], attachment: null, confirmed: false, busy: false });
+      this._draftBaseline = draftSnapshot(this.data);
       wx.showToast({ title: '已发布到本机', icon: 'success' });
       const section = kind === 'resource' || kind === 'request' ? 'resources' : 'market';
       const suffix = kind === 'request' ? '&libraryTab=requests' : kind === 'wanted' ? '&marketTab=wanted' : kind === 'product' && data.sale_mode === 'auction' ? '&marketTab=auctions' : '';
@@ -113,5 +123,8 @@ Page({
     }
   },
   onSchoolChanged() { this.onShow(); this.setData({ confirmed: false }); },
-  onMainNav(event) { if (!this.data.busy && !this.data.checking) require('../../utils/main-nav').navigateMain(event.detail.tab); }
+  hasUnsavedChanges() { return draftSnapshot(this.data) !== this._draftBaseline; },
+  leavePage(navigate) { mainNav.leaveWithConfirmation(this, { changed: this.hasUnsavedChanges(), blocked: () => this.data.busy || this.data.checking, content: '当前发布内容还没有保存，离开后需要重新填写。', navigate }); },
+  returnHome() { this.leavePage(fail => wx.reLaunch({ url: '/pages/index/index', fail })); },
+  onMainNav(event) { const tab = event.detail.tab; if (tab === 'publish' || !mainNav.routes[tab]) return; this.leavePage(fail => mainNav.navigateMain(tab, { fail })); }
 });

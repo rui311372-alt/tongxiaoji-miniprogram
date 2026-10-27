@@ -1,11 +1,18 @@
 :host { display: block; }
-.campus-header { display: flex; align-items: center; justify-content: space-between; box-sizing: border-box; min-height: 116rpx; padding: 16rpx 30rpx; background: #faf9f4; border-bottom: 1rpx solid #e1e6d8; }
-.campus-header__brand { display: flex; align-items: center; min-width: 0; }
-.campus-header__brand image { width: 72rpx; height: 72rpx; border-radius: 18rpx; flex-shrink: 0; margin-right: 14rpx; }
-.campus-header__name { font-size: 34rpx; color: #2e513e; font-weight: 700; }
-.campus-header__tagline { font-size: 19rpx; margin-top: 5rpx; color: #849078; }
-.campus-header__picker { max-width: 270rpx; margin-left: 12rpx; }
-.campus-header__school { box-sizing: border-box; display: flex; align-items: center; padding: 15rpx 16rpx; background: #fffefa; border: 1rpx solid #dae3d0; border-radius: 14rpx; font-size: 24rpx; color: #4e6747; }
-.campus-header__school text { margin-left: 14rpx; color: #87967d; }
-.campus-context { display: flex; align-items: center; padding: 10rpx 32rpx; gap: 10rpx; font-size: 22rpx; color: #586e4b; background: #f0f2e7; }
+.campus-header { display: flex; align-items: center; justify-content: space-between; gap:16rpx; box-sizing: border-box; min-height: 124rpx; padding: 18rpx 32rpx; background: #fffefa; border-bottom: 1rpx solid #e8ebdf; }
+.campus-header__brand { display: flex; align-items: center; min-width: 0; min-height:44px; transition:transform 140ms cubic-bezier(.23,1,.32,1),opacity 140ms cubic-bezier(.23,1,.32,1); }
+.campus-header__logo { width: 68rpx; height: 68rpx; border-radius: 19rpx; flex-shrink: 0; margin-right: 14rpx; }
+.campus-header__copy { min-width:0; }
+.campus-header__name { font-size: 34rpx; color: #2b503b; font-weight: 700; line-height:1.35; }
+.campus-header__tagline { font-size: 23rpx; margin-top: 5rpx; color: #69785f; line-height:1.5; white-space:nowrap; }
+.campus-header__picker { max-width: 270rpx; min-width:0; flex-shrink:1; }
+.campus-header__school { box-sizing: border-box; display: flex; align-items: center; min-height:44px; padding: 14rpx 18rpx; background: #f5f6ee; border: 1rpx solid #e1e6d7; border-radius: 18rpx; font-size: 26rpx; color: #4c6545; line-height:1.5; transition:transform 140ms cubic-bezier(.23,1,.32,1),opacity 140ms cubic-bezier(.23,1,.32,1); }
+.campus-header__school-name { min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.campus-header__arrow { margin-left: 14rpx; color: #75866a; flex-shrink:0; }
+.campus-header__pressed { transform:scale(.985); opacity:.9; }
+.campus-context { display: flex; align-items: center; padding: 8rpx 32rpx; gap: 10rpx; font-size: 23rpx; color: #60764f; background: #f0f3e8; line-height:1.5; }
 .campus-context__dot { width: 10rpx; height: 10rpx; flex-shrink: 0; border-radius: 50%; background: #7c9a65; }
+@media (prefers-reduced-motion: reduce) {
+  .campus-header__brand,.campus-header__school { transition:opacity 100ms ease-out; }
+  .campus-header__pressed { transform:none; }
+}

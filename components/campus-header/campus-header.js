@@ -2,7 +2,8 @@ const { schools } = require('../../utils/catalog');
 Component({
   properties: {
     schoolId: { type: String, value: 'tianjin', observer(value) { this.syncSchool(value); } },
-    disabled: { type: Boolean, value: false }
+    disabled: { type: Boolean, value: false },
+    interceptHome: { type: Boolean, value: false }
   },
   data: { schools, index: 0, school: schools[0] },
   lifetimes: { attached() { this.syncSchool(this.properties.schoolId); } },
@@ -22,6 +23,10 @@ Component({
       this.syncSchool(school.id);
       this.triggerEvent('schoolchange', { school });
     },
-    returnHome() { if (!this.properties.disabled) wx.reLaunch({ url: '/pages/index/index' }); }
+    returnHome() {
+      if (this.properties.disabled) return;
+      if (this.properties.interceptHome) this.triggerEvent('returnhome');
+      else wx.reLaunch({ url: '/pages/index/index' });
+    }
   }
 });

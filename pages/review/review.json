@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "期末冲刺",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark",
+  "usingComponents": {
+    "campus-header": "/components/campus-header/campus-header",
+    "campus-nav": "/components/campus-nav/campus-nav"
+  }
+}

@@ -1,9 +1,25 @@
 <campus-header school-id="{{school.id}}" disabled="{{busy}}" bind:schoolchange="onSchoolChanged" />
 <view class="page messages-page">
-  <view class="heading"><view class="section-title">聊清楚，再见面。</view><view class="school-name">{{school.name}}</view></view>
-  <view class="notice">这里是本机演示会话。回复由程序模拟，不会联系真实卖家。</view>
-  <view wx:if="{{error}}" class="error">{{error}}<button bindtap="refresh">重新读取</button></view>
-  <view wx:elif="{{!threads.length}}" class="empty-card"><view class="bubble-icon">聊</view><view class="empty-title">还没有会话</view><view class="empty-text">去二手集市看看，在物品详情点击联系卖家，体验模拟沟通。</view><button bindtap="goMarket">去二手集市</button></view>
-  <view wx:else class="thread-list"><button wx:for="{{threads}}" wx:key="id" class="thread" data-id="{{item.id}}" bindtap="open"><image wx:if="{{item.photo}}" class="thread-avatar" src="{{item.photo}}" mode="aspectFill" data-id="{{item.id}}" binderror="photoError"/><view wx:else class="thread-avatar placeholder">物</view><view class="thread-content"><view class="thread-head"><view class="thread-title">{{item.title}}</view><text>{{item.time}}</text></view><view class="conversation-school">{{item.schoolName}} · 模拟咨询</view><view class="last-message">{{item.last}}</view></view><text class="arrow">›</text></button></view>
+  <view class="heading"><view><view class="heading-eyebrow">校园消息</view><view class="section-title">聊清楚，再见面。</view></view><view class="school-name">{{school.name}}</view></view>
+  <view wx:if="{{threads.length && !error}}" class="conversation-tools"><view class="conversation-count">本校 {{threads.length}} 个会话</view><view class="manage-actions"><button hover-class="ui-press" wx:if="{{managing}}" class="clear-threads" bindtap="clearThreads" disabled="{{busy}}" hover-start-time="0" hover-stay-time="140">清空本校</button><button hover-class="ui-press" class="manage-toggle" bindtap="toggleManage" disabled="{{busy}}" hover-start-time="0" hover-stay-time="140">{{managing?'完成':'管理'}}</button></view></view>
+  <view wx:if="{{managing}}" class="manage-hint">删除会话会同时清除聊天记录，腾出会话名额。</view>
+  <view wx:if="{{actionError}}" class="action-error" role="alert">{{actionError}}</view>
+  <view wx:if="{{error}}" class="error">{{error}}<button hover-class="ui-press" bindtap="refresh" hover-start-time="0" hover-stay-time="140">重新读取</button></view>
+  <view wx:elif="{{!threads.length}}" class="empty-card"><view class="empty-mascot"><image src="/assets/mascot-wave.png" mode="scaleToFill" aria-hidden="true" /></view><view class="empty-title">还没有会话</view><view class="empty-text">看中同校好物？<view>在物品详情联系卖家，体验模拟沟通。</view></view><button hover-class="ui-press" bindtap="goMarket" hover-start-time="0" hover-stay-time="140">去二手集市看看 <text>→</text></button></view>
+  <view wx:else class="thread-list">
+    <view wx:for="{{threads}}" wx:key="id" class="thread-row {{managing?'thread-row-managing':''}}">
+    <button class="thread" hover-class="{{managing?'none':'thread-pressed'}}" data-id="{{item.id}}" bindtap="open" bindlongpress="deleteThread" disabled="{{busy}}" hover-start-time="0" hover-stay-time="140">
+      <image wx:if="{{item.photo}}" class="thread-avatar" src="{{item.photo}}" mode="aspectFill" data-id="{{item.id}}" binderror="photoError"/>
+      <view wx:else class="thread-avatar placeholder">物</view>
+      <view class="thread-content">
+        <view class="thread-head"><view class="thread-title">{{item.title}}</view><text wx:if="{{item.time && !managing}}" class="thread-time">{{item.time}}</text></view>
+        <view class="conversation-school">{{item.schoolName}} · 模拟咨询</view>
+        <view class="last-message">{{item.last}}</view>
+      </view>
+      <text wx:if="{{!managing}}" class="arrow">›</text>
+    </button>
+    <button hover-class="ui-press" wx:if="{{managing}}" class="thread-delete" data-id="{{item.id}}" bindtap="deleteThread" disabled="{{busy}}" aria-label="删除与{{item.title}}有关的会话" hover-start-time="0" hover-stay-time="140">删除</button>
+    </view>
+  </view>
 </view>
 <campus-nav active="messages" bind:select="onMainNav"/>

@@ -164,7 +164,7 @@ function startChat(productId, schoolId) {
   if (product.isLocal) fail('这是自己发布的物品，无需联系自己。可在“我的发布”查看。');
   const existing = state.threads.find(row => row.product_id === productId && row.school_id === schoolId);
   if (existing) return validThread(existing).id;
-  if (state.threads.length >= 30) fail('本机最多保存 30 个演示会话。');
+  if (state.threads.length >= 30) fail('本机最多保存 30 个演示会话，请到“消息”的“管理”中删除不需要的会话后重试。');
   const now = new Date().toISOString();
   const auction = product.sale_mode === 'auction' || auctionSeeds.some(item => item.product_id === productId && item.school_id === schoolId);
   const thread = { id: id('chat'), school_id: schoolId, product_id: productId, product: { title: product.title, description: product.description, place: product.place, price_cents: product.price_cents, condition: product.condition, image: product.image || '', sale_mode: auction ? 'auction' : 'fixed', isLocal: false }, updated_at: now, messages: [{ id: id('message'), role: 'seller', text: '【演示自动回复】你好，这里是本机模拟会话。可以询问物品、价格或交接地点，消息不会发送给真实卖家。', created_at: now, demo: true }] };
@@ -180,6 +180,51 @@ function getThread(threadId) {
   const found = read().threads.find(row => row.id === threadId);
   if (!found) fail('会话不存在，请从物品详情重新进入。');
   return validThread(found);
+}
+function scopedThread(state, threadId, schoolId) {
+  if (typeof threadId !== 'string' || !threadId) fail('请选择要管理的会话。');
+  const row = state.threads.find(item => item.id === threadId && item.school_id === schoolId);
+  if (!row) fail('当前学校找不到这段会话，请刷新消息列表。');
+  return row;
+}
+function deleteThread(threadId, schoolId) {
+  school(schoolId);
+  const state = read();
+  scopedThread(state, threadId, schoolId);
+  const threads = state.threads.filter(row => !(row.id === threadId && row.school_id === schoolId));
+  save(Object.assign({}, state, { threads }));
+  return true;
+}
+function clearThreads(schoolId) {
+  school(schoolId);
+  const state = read();
+  const threads = state.threads.filter(row => row.school_id !== schoolId);
+  const removed = state.threads.length - threads.length;
+  if (removed) save(Object.assign({}, state, { threads }));
+  return removed;
+}
+function saveThreadMessages(state, original, messages) {
+  const latest = messages.length ? messages[messages.length - 1].created_at : '';
+  // 清理历史不算新消息；空会话排到列表末尾，页面不展示其时间。
+  const updated_at = Number.isFinite(Date.parse(latest)) ? latest : '1970-01-01T00:00:00.000Z';
+  const thread = validThread(Object.assign({}, original, { messages, updated_at }));
+  const threads = state.threads.map(row => row.id === original.id && row.school_id === original.school_id ? thread : row);
+  save(Object.assign({}, state, { threads }));
+  return thread;
+}
+function clearThreadMessages(threadId, schoolId) {
+  school(schoolId);
+  const state = read();
+  const thread = validThread(scopedThread(state, threadId, schoolId));
+  if (!thread.messages.length) return thread;
+  return saveThreadMessages(state, thread, []);
+}
+function deleteMessage(threadId, messageId, schoolId) {
+  school(schoolId);
+  const state = read();
+  const thread = validThread(scopedThread(state, threadId, schoolId));
+  if (typeof messageId !== 'string' || !thread.messages.some(message => message.id === messageId)) fail('这条消息已不存在，请刷新会话。');
+  return saveThreadMessages(state, thread, thread.messages.filter(message => message.id !== messageId));
 }
 function replyFor(product, message) {
   let reply;
@@ -203,4 +248,4 @@ function sendMessage(threadId, value) {
   save(state);
   return thread;
 }
-module.exports = { getResources, getProducts, getRequests, getWanted, publish, updateRequest, updateWanted, startChat, getThreads, getThread, sendMessage, resourceCategories, productCategories, conditions };
+module.exports = { getResources, getProducts, getRequests, getWanted, publish, updateRequest, updateWanted, startChat, getThreads, getThread, sendMessage, deleteThread, clearThreads, clearThreadMessages, deleteMessage, resourceCategories, productCategories, conditions };

@@ -3,6 +3,22 @@ const photoMap = require('./photo-map');
 const experience = require('./experience');
 const store = require('./store');
 const discovery = require('./discovery-data');
+const { resources: catalogResources } = require('./catalog');
+const { resources: majorResources } = require('./major-resources');
+const builtinResources = new Map(catalogResources.concat(majorResources).map(item => [item.id, item.school_id]));
+// Classroom fixture values are deterministic and never written into the user's
+// real local download counters or account credit ledger.
+function sampleHash(value) {
+  let hash = 2166136261;
+  for (const char of String(value)) hash = Math.imul(hash ^ char.charCodeAt(0), 16777619) >>> 0;
+  return hash;
+}
+function resourceDownloads(item, localCount) {
+  const localDownloads = Number.isInteger(localCount) && localCount >= 0 ? localCount : 0;
+  const downloadsDemo = !item.isLocal && builtinResources.get(item.id) === item.school_id;
+  const demoDownloads = downloadsDemo ? 18 + sampleHash('downloads:' + item.id) % 483 : 0;
+  return { downloads: demoDownloads + localDownloads, localDownloads, demoDownloads, downloadsDemo };
+}
 const money = cents => (Number(cents || 0) / 100).toFixed(2).replace(/\.00$/, '');
 function getProducts() {
   const overlays = experience.getAuctionProducts();
@@ -18,6 +34,9 @@ function rating(item, summary) {
 function author(item) {
   if(item.isLocal) { const p=store.getProfile(), c=experience.getCredit(item.school_id); return {name:p.nickname,credit:c.score,creditLabel:c.level,isDemo:false}; }
   const p=discovery.authors[item.id];
-  return {name:p?p.nickname:(item.author_name || '同校同学'),credit:100,creditLabel:'初始信用 · 示例',isDemo:true};
+  const name=p?p.nickname:(item.author_name || '同校同学');
+  const key=p&&p.id?p.id:item.school_id+':'+name;
+  const credits=[86,91,94,96,98,101,103,106,108,112,115,118];
+  return {name,credit:credits[sampleHash('credit:'+key)%credits.length],creditLabel:'课堂示例信用',isDemo:true};
 }
-module.exports={getProducts,photo,money,rating,author};
+module.exports={getProducts,photo,money,rating,author,resourceDownloads};

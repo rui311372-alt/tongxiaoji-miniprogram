@@ -1,31 +1,22 @@
 <campus-header school-id="{{schoolId}}" bind:schoolchange="onSchoolChanged"/>
 <view class="page practice-page">
-  <view class="library-heading">
-    <view class="library-title">学习资料</view>
-    <view class="library-caption">{{schoolName}} · {{resourceCount}} 份整理，免费互助共享</view>
-  </view>
-  <view class="topic-shortcuts">
-    <button class="topic-card" data-topic="exam" bindtap="openTopic"><image class="topic-icon" src="/assets/nav/topic-review.png" /><view class="topic-copy"><view class="topic-title">期末冲刺</view><view class="topic-caption">{{outlineCount}} 份提纲</view></view></button>
-    <button class="topic-card active" data-topic="practice" bindtap="openTopic"><image class="topic-icon" src="/assets/nav/topic-practice.png" /><view class="topic-copy"><view class="topic-title">刷题练习</view><view class="topic-caption">64 道选择题</view></view></button>
-    <button class="topic-card" data-topic="requests" bindtap="openTopic"><image class="topic-icon" src="/assets/nav/topic-help.png" /><view class="topic-copy"><view class="topic-title">互助补齐</view><view class="topic-caption">{{requestCount}} 条求助</view></view></button>
-  </view>
-  <view class="library-subtabs">
-    <button class="library-subtab" data-tab="resources" bindtap="onLibraryTab">资料广场</button>
-    <button class="library-subtab active" data-tab="practice" bindtap="onLibraryTab">刷题练习</button>
-    <button class="library-subtab" data-tab="requests" bindtap="onLibraryTab">求资料</button>
-  </view>
+  <button class="topic-back" bindtap="backToLibrary">‹ 返回学习资料</button>
   <view class="practice-intro">
-    <view class="practice-badge">刷题练习</view>
-    <view class="practice-intro-title">按课程巩固知识</view>
-    <view class="practice-subtitle">4 门课程 · 64 道基础选择题 · 提交后看解析</view>
+    <view class="practice-badge">{{schoolName}} · 刷题练习</view>
+    <view class="practice-intro-title">每次练习，都更进一步</view>
+    <view class="practice-subtitle">{{bankCourseCount}} 门课程 · {{bankQuestionCount}} 道基础选择题 · 提交后看解析</view>
     <view class="practice-boundary">原创基础练习，不代表本校考题；记录仅保存在当前设备。</view>
   </view>
+  <view class="scope-label">{{schoolName}} · {{selectedCourse}}</view>
   <view class="stats">
     <view class="stat"><view class="stat-value">{{answeredCount}}<text class="stat-denominator">/{{scopedCount}}</text></view><view class="stat-caption">所选课程已练</view></view>
-    <view class="stat"><view class="stat-value">{{accuracy}}</view><view class="stat-caption">累计正确率</view></view>
-    <view class="stat"><view class="stat-value">{{wrongCount}}</view><view class="stat-caption">本校待巩固</view></view>
+    <view class="stat"><view class="stat-value">{{accuracy}}</view><view class="stat-caption">所选课程正确率</view></view>
+    <view class="stat stat-wrong"><view class="stat-value">{{scopedWrongCount}}</view><view class="stat-caption">所选课程待巩固</view></view>
   </view>
-  <view wx:if="{{!persistent}}" class="notice">暂时无法保存到设备。仍可继续本次练习，关闭后可能丢失未保存的记录。</view>
+  <view class="coverage-row"><text>课程练习进度</text><text>{{completedWidth}}%</text></view>
+  <view class="coverage-track"><view class="coverage-fill" style="width: {{completedWidth}}%;"></view></view>
+  <view wx:if="{{storageReadBlocked}}" class="notice">原有练习记录读取异常或格式不完整。为保护原记录，本次仅临时练习，不会覆盖设备上的数据；退出本页后重新进入可尝试恢复读取，临时作答不会保留。</view>
+  <view wx:elif="{{!persistent}}" class="notice">暂时无法保存到设备。仍可继续本次练习，关闭后可能丢失未保存的记录。</view>
   <picker range="{{courseOptions}}" value="{{courseIndex}}" bindchange="changeCourse">
     <view class="course-picker"><view><text class="picker-label">练习课程</text><view class="picker-value">{{selectedCourse}}</view></view><text class="picker-arrow">切换 ▾</text></view>
   </picker>
@@ -33,7 +24,21 @@
     <button class="mode-tab {{mode === 'all' ? 'active' : ''}}" bindtap="practiceAll">按课程练</button>
     <button class="mode-tab {{mode === 'wrong' ? 'active' : ''}}" bindtap="practiceWrong">错题回练 {{scopedWrongCount}}</button>
   </view>
-  <view wx:if="{{current}}" class="question-card">
+  <view wx:if="{{roundComplete}}" class="question-card round-summary">
+    <view class="completion-icon">✓</view>
+    <view class="empty-title">{{mode === 'wrong' ? '这轮错题回练完成了' : '本轮练习完成了'}}</view>
+    <view class="empty-note">{{selectedCourse}} · 认真练过的每一题，都算数。</view>
+    <view class="round-results">
+      <view class="round-result"><view class="round-value">{{roundCorrect}}<text class="stat-denominator">/{{roundAnswered}}</text></view><view class="round-caption">本轮答对</view></view>
+      <view class="round-result"><view class="round-value">{{roundAccuracy}}</view><view class="round-caption">本轮正确率</view></view>
+      <view class="round-result"><view class="round-value">{{roundMastered}}</view><view class="round-caption">已攻克错题</view></view>
+    </view>
+    <view class="completion-note">{{scopedWrongCount ? '当前课程还有 ' + scopedWrongCount + ' 道错题，趁热再巩固一次。' : '当前课程没有待巩固错题，继续保持！'}}</view>
+    <button wx:if="{{scopedWrongCount}}" class="primary-button" bindtap="practiceWrong">巩固剩余错题 · {{scopedWrongCount}}</button>
+    <button class="{{scopedWrongCount ? 'summary-toggle' : 'primary-button'}}" bindtap="practiceAll">再练一轮</button>
+  </view>
+  <view wx:elif="{{current}}" class="question-card">
+    <view wx:if="{{mode === 'wrong'}}" class="round-mode-note">错题回练 · 答对后移出错题本，本轮解析仍可回看</view>
     <view class="question-meta"><text class="question-topic">{{current.course}} · {{current.topic}}</text><text class="question-count">{{index + 1}}/{{questionCount}}</text></view>
     <view class="progress-track"><view class="progress-fill" style="width: {{progressWidth}}%;"></view></view>
     <view class="question-stem">{{current.stem}}</view>
@@ -49,6 +54,7 @@
       <view class="explanation-answer">正确答案：{{answerLetter}}</view>
       <view class="explanation-body">{{current.explanation}}</view>
       <view wx:if="{{!answeredCorrect}}" class="explanation-tip">已加入错题本；再次答对后，从待巩固列表移除。</view>
+      <view wx:elif="{{currentWasWrong}}" class="explanation-tip">这道错题已攻克，已从待巩固列表移除。</view>
     </view>
     <view class="question-actions">
       <button class="secondary-button" bindtap="previousQuestion" disabled="{{index === 0}}">上一题</button>
@@ -59,19 +65,19 @@
   </view>
   <view wx:else class="question-card empty-state">
     <view class="empty-icon">✓</view>
-    <view class="empty-title">当前课程没有待巩固错题</view>
-    <view class="empty-note">答错的题会自动收集。也可以继续按课程练习。</view>
+    <view class="empty-title">{{answeredCount ? '当前课程没有待巩固错题' : '先练几题，再来巩固'}}</view>
+    <view class="empty-note">{{selectedCourse}}的错题会自动收集在这里。答对后自动移出，练习记录仍保留。</view>
     <button class="primary-button" bindtap="practiceAll">返回课程练习</button>
   </view>
   <view class="summary-card">
-    <view class="summary-heading"><text class="section-title">错题总结</text><text class="pill">{{wrongCount}} 题待巩固</text></view>
-    <view class="summary-note">按课程与知识点整理，针对薄弱处再练一次。</view>
+    <view class="summary-heading"><text class="section-title">错题总结</text><text class="pill">{{scopedWrongCount}} 题待巩固</text></view>
+    <view class="summary-note">{{selectedCourse}} · 按知识点查漏补缺</view>
     <view wx:for="{{courseSummary}}" wx:key="course" class="course-summary">
       <view class="summary-course-row"><text>{{item.course}}</text><text class="summary-count {{item.count ? 'has-wrong' : ''}}">{{item.count}} 题待巩固</text></view>
-      <view class="summary-progress">已练 {{item.answered}} / 16 题</view>
+      <view class="summary-progress">已练 {{item.answered}} / {{item.total}} 题</view>
       <view wx:if="{{item.count}}" class="topic-list"><text wx:for="{{item.topics}}" wx:for-item="topicItem" wx:key="topic" class="topic-pill">{{topicItem.topic}} · {{topicItem.count}}</text></view>
     </view>
-    <button wx:if="{{wrongCount}}" class="summary-toggle" bindtap="toggleWrongDetails">{{showWrongDetails ? '收起错题与要点' : '查看错题与要点'}} {{showWrongDetails ? '▴' : '▾'}}</button>
+    <button wx:if="{{scopedWrongCount}}" class="summary-toggle" bindtap="toggleWrongDetails">{{showWrongDetails ? '收起错题与要点' : '查看错题与要点'}} {{showWrongDetails ? '▴' : '▾'}}</button>
     <view wx:if="{{showWrongDetails}}" class="wrong-details">
       <view wx:for="{{wrongItems}}" wx:key="id" class="wrong-item">
         <view class="wrong-course">{{item.course}} · {{item.topic}}</view>
@@ -82,8 +88,8 @@
       </view>
     </view>
   </view>
-  <view class="record-note">正确率按每次提交累计，重复练习也计入。当前共提交 {{totalAttempts}} 次，答对 {{totalCorrect}} 次。</view>
-  <button class="clear-button" bindtap="clearProgress" disabled="{{!totalAttempts}}">清空本校练习记录</button>
+  <view class="record-note">{{selectedCourse}}共提交 {{scopedAttempts}} 次，答对 {{scopedCorrect}} 次。新一轮练习会继续累计；本轮返回上一题查看解析不会重复计数。</view>
+  <button class="clear-button" bindtap="clearProgress" disabled="{{!totalAttempts}}">{{storageReadBlocked ? '清空本次临时练习' : '清空本校练习记录'}}</button>
   <view class="footnote"><view>原创基础练习，不代表学校真题。</view><view>记录仅保存在当前微信设备，按学校分别保存。</view></view>
 </view>
 

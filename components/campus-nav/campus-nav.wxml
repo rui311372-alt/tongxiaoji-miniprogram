@@ -4,7 +4,7 @@
     <button wx:for="{{tabs}}" wx:key="key"
       class="campus-nav__button {{active === item.key ? 'is-active' : ''}} {{item.key === 'publish' ? 'campus-nav__publish' : ''}} {{disabled ? 'is-disabled' : ''}}"
       data-tab="{{item.key}}" bindtap="onSelect" disabled="{{disabled}}"
-      hover-class="campus-nav__pressed" aria-label="{{item.label}}">
+      hover-class="campus-nav__pressed" hover-start-time="0" hover-stay-time="100" aria-label="{{item.label}}">
       <view wx:if="{{item.key === 'publish'}}" class="campus-nav__plus" aria-hidden="true">
         <view class="campus-nav__plus-line campus-nav__plus-horizontal"></view>
         <view class="campus-nav__plus-line campus-nav__plus-vertical"></view>

@@ -4,6 +4,7 @@ const { majors } = require('../../utils/majors');
 const store = require('../../utils/store');
 const photoMap = require('../../utils/photo-map');
 const { deriveParticipation } = require('../../utils/auction-participation');
+const mainNav = require('../../utils/main-nav');
 const tabs = [{ id: 'orders', label: '我的订单' }, { id: 'posts', label: '我的发布' }, { id: 'saved', label: '我的收藏' }, { id: 'history', label: '浏览足迹' }, { id: 'credit', label: '校园信用' }];
 const statuses = [{ id: 'all', label: '全部' }, { id: 'reserved', label: '待见面' }, { id: 'completed', label: '已完成' }, { id: 'cancelled', label: '已取消' }, { id: 'no_show', label: '已爽约' }];
 const ruleRows = [{ id: 'completed', label: '模拟完成交易', note: '每次预约只计分一次，最高 120 分。', delta: 2 }, { id: 'early_cancel', label: '提前取消预约', note: '距约定时间至少 2 小时。', delta: 0 }, { id: 'late_cancel', label: '临近取消预约', note: '距约定时间不足 2 小时。', delta: -3 }, { id: 'no_show', label: '模拟本人爽约', note: '主动模拟爽约，或在约定时间后取消。', delta: -10 }];
@@ -68,6 +69,7 @@ Page({
     if (options && (options.view === 'auctions' || options.orderSection === 'auctions')) this.setData({ orderArea: 'auctions' });
   },
   onShow() {
+    this._leaving = false;
     const school = schools.find(row => row.id === getApp().globalData.schoolId) || schools[0];
     this._hidden = false;
     if (school.id !== this.data.school.id) this.setData({ favorites: [], visibleFavorites: [], posts: [], orders: [], visibleOrders: [], focusedOrderId: '', orderStatus: 'all', auctionParticipation: [], visibleAuctions: [], auctionStatus: 'all', auctionError: '', trails: [], ledger: [], credit: null, counts: { posts: 0, saved: 0, pending: 0, history: 0 }, creditCounts: { completed: 0, late_cancel: 0, no_show: 0 }, favoriteKinds: [{ id: 'all', label: '全部', count: 0 }, { id: 'resources', label: '学习资料', count: 0 }, { id: 'market', label: '二手闲置', count: 0 }] });
@@ -292,12 +294,14 @@ Page({
     } catch (error) { this.refreshDashboard(); wx.showToast({ title: error.message || '预约信息读取失败，未复制', icon: 'none' }); }
   },
   copyAppointment(event) { const order = this.data.orders.find(row => row.id === event.currentTarget.dataset.id); if (order) this.copyOrder(order); },
-  publishMore() { if (!this.isBusy()) require('../../utils/main-nav').navigateMain('publish'); },
-  browseMarket() { if (!this.isBusy()) require('../../utils/main-nav').navigateMain('market'); },
-  browseAuctions() { if (!this.isBusy()) wx.reLaunch({ url: '/pages/browse/browse?section=market&marketTab=auctions' }); },
-  onMainNav(event) { if (!this.isBusy() && event.detail.tab !== 'mine') require('../../utils/main-nav').navigateMain(event.detail.tab); },
+  hasUnsavedChanges() { const saved = this.data.profileInfo; return this._loaded && (this.data.nickname.trim() !== saved.nickname || majors[this.data.majorIndex] !== saved.major || this.data.draftAvatar !== saved.avatar || this.data.demoVerified !== saved.demo_verified); },
+  leavePage(navigate) { mainNav.leaveWithConfirmation(this, { changed: this.hasUnsavedChanges(), blocked: () => this.isBusy(), content: '资料修改还没有保存，离开后将保留上次保存的资料。', navigate }); },
+  publishMore() { this.leavePage(fail => mainNav.navigateMain('publish', { fail })); },
+  browseMarket() { this.leavePage(fail => mainNav.navigateMain('market', { fail })); },
+  browseAuctions() { this.leavePage(fail => wx.reLaunch({ url: '/pages/browse/browse?section=market&marketTab=auctions', fail })); },
+  onMainNav(event) { const tab = event.detail.tab; if (tab === 'mine' || !mainNav.routes[tab]) return; this.leavePage(fail => mainNav.navigateMain(tab, { fail })); },
   onSchoolChanged() { this.onShow(); },
-  toggleEditor() { if (this.isBusy()) return; if (this.data.editing) this.reloadProfile(); this.setData({ editing: !this.data.editing }); },
+  toggleEditor() { if (this.isBusy()) return; this.setData({ editing: !this.data.editing }); },
   about() { wx.showModal({ title: '关于同校集课堂体验', content: '本版是微信原生本机演示。账号资料、发布、收藏、足迹、刷题、聊天与模拟预约仅保存在这台设备，与网页及其他设备分别保存。认证不核验真实身份，聊天为演示自动回复；交易不收款、不锁定真实库存。预置商品照片为同类实物参考图，照片许可见项目 assets/photos/SOURCE-LICENSES.md。', showCancel: false, confirmText: '了解了' }); },
-  returnHome() { if (!this.isBusy()) wx.reLaunch({ url: '/pages/index/index' }); }
+  returnHome() { this.leavePage(fail => wx.reLaunch({ url: '/pages/index/index', fail })); }
 });

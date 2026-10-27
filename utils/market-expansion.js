@@ -1,4 +1,4 @@
-// 本机课堂商品与来源信息；压缩输出保留原作者和许可。
+// 本机课堂商品与来源信息；图片保留原作者和许可。
 module.exports = {
   "products": [
     {
@@ -1094,9 +1094,9 @@ module.exports = {
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "source": "https://commons.wikimedia.org/wiki/File:Frog_or_Surprise_mug.JPG",
       "source_sha256": "5dcd49c8e2e6014a7583c172f7cff9c266c72743f72127ee8dbfb569bc304fbd",
-      "output_sha256": "1cbc91c526c1de32f82544e270fd10a48186083e2eda1f8cf38763350ce2afca",
+      "output_sha256": "5dcd49c8e2e6014a7583c172f7cff9c266c72743f72127ee8dbfb569bc304fbd",
       "dhash": "047f133f07d709ff19ae1ab71ab31d380e38067d06f803b811b88e7043e023c0",
-      "bytes": 2379
+      "bytes": 113975
     },
     {
       "key": "bottle-black",
@@ -1133,9 +1133,9 @@ module.exports = {
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "source": "https://commons.wikimedia.org/wiki/File:Blue_tape_measure.jpg",
       "source_sha256": "74a3d97febcf049eea42589285eba5aa3e55c68c8556eb5be53f59bf3a5d9573",
-      "output_sha256": "8aee45ab597575ce379a1f7c9864cc48a744ac00d3d1f1b263880bf5c68aed10",
+      "output_sha256": "74a3d97febcf049eea42589285eba5aa3e55c68c8556eb5be53f59bf3a5d9573",
       "dhash": "000f0183101f005f055f815f815f84779cfb981b9427503ca1a0400040002000",
-      "bytes": 1577
+      "bytes": 76470
     },
     {
       "key": "scissors-black",
@@ -1146,9 +1146,9 @@ module.exports = {
       "licenseUrl": "https://creativecommons.org/licenses/by/2.5",
       "source": "https://commons.wikimedia.org/wiki/File:Pair_of_scissors_with_black_handle.jpg",
       "source_sha256": "6260557af2da408cc0f4fcfb017529314cf6ed7bb5c788390e5ae0fa49026bc9",
-      "output_sha256": "d1d18708f5367a02b75f2b728674514fef25da10aa047bd1cb465ec9c10800fc",
+      "output_sha256": "6260557af2da408cc0f4fcfb017529314cf6ed7bb5c788390e5ae0fa49026bc9",
       "dhash": "cf10af30b718cc90c610e318ed8cececee7cce3fef2dee9dee97ef94efccff28",
-      "bytes": 1362
+      "bytes": 81786
     },
     {
       "key": "calculator-sharp",

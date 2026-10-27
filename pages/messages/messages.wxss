@@ -1,1 +1,60 @@
-.messages-page{padding-bottom:28rpx}.heading{display:flex;align-items:center;justify-content:space-between;margin:8rpx 0 20rpx}.school-name{color:#6e7f70;font-size:24rpx}.notice{font-size:24rpx;color:#7b8575;line-height:1.8;margin-bottom:30rpx}.empty-card{background:#fffefa;border:1rpx solid #e0e5d6;border-radius:24rpx;padding:60rpx 34rpx;text-align:center;margin-top:40rpx}.bubble-icon{display:inline-block;background:#e8efdf;color:#497056;border-radius:24rpx;padding:22rpx;font-size:36rpx;font-weight:700}.empty-title{font-size:32rpx;font-weight:700;margin:30rpx 0 16rpx}.empty-text{font-size:26rpx;line-height:1.9;color:#7b8575}.empty-card button{background:#33654f;color:white;margin-top:34rpx;width:80%;padding:12rpx}.thread-list{border:1rpx solid #e0e5d6;border-radius:24rpx;overflow:hidden;background:#fffefa}.thread{display:flex;align-items:center;padding:28rpx 22rpx;border-bottom:1rpx solid #ecede3;gap:18rpx;width:100%;border-radius:0;text-align:left;margin:0;background:transparent;line-height:1.5;color:#253d32}.thread:last-child{border:0}.thread-avatar{background:#e8efdf;width:90rpx;height:90rpx;line-height:90rpx;text-align:center;border-radius:17rpx;font-weight:700;color:#577456;font-size:30rpx;flex-shrink:0}.thread-content{min-width:0;flex:1}.thread-head{display:flex;align-items:center;gap:12rpx}.thread-title{font-weight:600;font-size:27rpx;flex:1;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}.thread-head>text{color:#8a9385;font-size:19rpx;flex-shrink:0}.last-message{font-size:24rpx;color:#77816f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:8rpx}.conversation-school{font-size:21rpx;color:#8a9383;margin-top:7rpx}.arrow{color:#88947d;font-size:35rpx}.error{padding:30rpx;color:#a13e27;line-height:1.7}.error button{margin-top:20rpx;color:#33654f;background:#e9efdf}
+.messages-page { padding-bottom: 28rpx; }
+.heading { display: flex; align-items: center; justify-content: space-between; gap:16rpx; margin: 4rpx 0 28rpx; }
+.heading > view:first-child { flex:1; min-width:0; }
+.heading-eyebrow { font-size:24rpx; letter-spacing:1rpx; color:#6d806c; margin-bottom:10rpx; }
+.school-name { max-width:36%; padding:8rpx 14rpx; border:1rpx solid #e0e6d8; border-radius:18rpx; background:#edf2e7; color:#536f53; font-size:25rpx; flex-shrink:0; line-height:1.6; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.conversation-tools,.manage-actions { display:flex; align-items:center; justify-content:space-between; gap:18rpx; }
+.conversation-tools { min-height:72rpx; margin-bottom:18rpx; }
+.conversation-count { flex:1; min-width:0; color:#697c69; font-size:25rpx; }
+.messages-page .manage-actions button { width:auto; min-width:88rpx; max-width:none; min-height:72rpx; margin:0; padding:17rpx 18rpx; border-radius:18rpx; font-size:25rpx; line-height:1.5; }
+.manage-toggle { color:#365d44; background:#e9f0e2; border:1rpx solid #dce5d5; }
+.clear-threads { color:#995c4c; background:transparent; }
+.manage-hint { color:#6e7d6c; font-size:24rpx; line-height:1.7; margin:-6rpx 0 20rpx; }
+.action-error { color:#a13e27; background:#fff0e8; border-radius:16rpx; padding:20rpx; font-size:25rpx; line-height:1.7; margin-bottom:18rpx; }
+.empty-card { background: #fffefa; border: 1rpx solid #e3e8da; border-radius: 28rpx; padding: 48rpx 32rpx 44rpx; text-align: center; margin-top: 32rpx; box-shadow:0 8rpx 28rpx #2d493405; }
+.empty-mascot { width:180rpx; height:180rpx; margin:0 auto; overflow:hidden; border-radius:50%; background:radial-gradient(ellipse,#edf2e2,#fffefa); }
+.empty-mascot image { display:block; width:720rpx; max-width:none; height:180rpx; }
+.empty-title { color:#2d4c3a; font-size:36rpx; font-weight:700; line-height:1.45; margin:22rpx 0 14rpx; }
+.empty-text { font-size: 28rpx; line-height: 1.9; color: #6e7d65; }
+.messages-page .empty-card button { background: #33654f; color: white; margin:32rpx auto 0; width:100%; max-width:480rpx; min-width:0; padding:22rpx 24rpx; min-height:88rpx; line-height:1.5; font-size:28rpx; border-radius:24rpx; }
+.empty-card button text { margin-left:18rpx; }
+.thread-list { display:flex; flex-direction:column; gap:16rpx; }
+.thread-row { display:flex; align-items:center; border:1rpx solid #e3e8da; border-radius:26rpx; overflow:hidden; background:#fffefa; box-shadow:0 6rpx 22rpx #2d493404; }
+/* Override style v2's button:not([size=mini]) width and padding. */
+.messages-page .thread {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+  height: auto;
+  box-sizing: border-box;
+  padding: 24rpx;
+  border-bottom: 0;
+  border-radius: 0;
+  text-align: left;
+  margin: 0;
+  background: transparent;
+  line-height: 1.5;
+  color: #253d32;
+}
+.thread-row .thread { flex:1; }
+.messages-page .thread-delete { flex:0 0 90rpx; width:90rpx; min-width:90rpx; max-width:90rpx; min-height:72rpx; margin:0 20rpx 0 0; padding:17rpx 0; font-size:25rpx; line-height:1.5; border-radius:18rpx; color:#985543; background:#f9eee8; }
+.thread-row-managing .thread-avatar { width:90rpx; height:90rpx; line-height:90rpx; flex-basis:90rpx; margin-right:16rpx; }
+.thread-row-managing .thread { padding-right:14rpx; }
+.messages-page .thread-pressed { transform:scale(.985); opacity:.9; background:#f0f3e9; }
+.thread-avatar { background: #edf0e6; width: 112rpx; height: 112rpx; line-height: 112rpx; margin-right: 20rpx; text-align: center; border-radius: 20rpx; border:1rpx solid #e6e9df; font-weight: 700; color: #577456; font-size: 32rpx; flex: 0 0 112rpx; }
+.thread-content { min-width: 0; flex: 1; }
+.thread-head { display:flex; align-items:center; gap:12rpx; }
+.thread-title { min-width: 0; font-weight: 600; font-size: 31rpx; flex: 1; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+.thread-time { max-width:168rpx; color:#6f7d6a; font-size:22rpx; flex-shrink:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-variant-numeric:tabular-nums; }
+.last-message { font-size: 28rpx; color: #68785f; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 8rpx; }
+.conversation-school { font-size:24rpx; color:#6e7e69; margin-top:7rpx; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.arrow { color: #88947d; font-size: 35rpx; flex: 0 0 18rpx; margin-left: 14rpx; text-align: right; }
+.error { padding: 30rpx; color: #a13e27; line-height: 1.7; }
+.error button { margin-top: 20rpx; color: #33654f; background: #e9efdf; }
+
+@media (prefers-reduced-motion: reduce) {
+  .messages-page .thread-pressed { transform:none; }
+}

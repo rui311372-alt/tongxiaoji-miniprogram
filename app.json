@@ -5,6 +5,8 @@
     "pages/detail/detail",
     "pages/logs/logs",
     "pages/practice/practice",
+    "pages/review/review",
+    "pages/help/help",
     "pages/profile/profile",
     "pages/publish/publish",
     "pages/messages/messages",

@@ -1,9 +1,10 @@
-<campus-header school-id="{{school.id}}" disabled="{{busy||checking}}" bind:schoolchange="onSchoolChanged" />
+<campus-header school-id="{{school.id}}" disabled="{{busy||checking}}" intercept-home="{{true}}" bind:returnhome="returnHome" bind:schoolchange="onSchoolChanged" />
 <view class="page publish-page">
-  <view class="heading"><view class="section-title">发布到本校</view><view class="school-name">{{school.name}}</view></view>
-  <view class="notice">将发布到{{school.name}}，请核对学校与内容。</view>
-  <view class="publish-tabs"><button wx:for="{{tabs}}" wx:key="id" class="{{kind===item.id?'active':''}}" data-kind="{{item.id}}" bindtap="changeKind" disabled="{{busy||checking}}">{{item.label}}</button></view>
+  <view class="publish-intro"><view class="heading"><view class="section-title">发布到本校</view><view class="school-name">{{school.name}}</view></view>
+  <view class="notice">一份整理、一件闲置，都可能刚好被需要。</view></view>
+  <view class="publish-tabs"><button hover-class="ui-press" wx:for="{{tabs}}" wx:key="id" class="{{kind===item.id?'active':''}}" data-kind="{{item.id}}" bindtap="changeKind" disabled="{{busy||checking}}" hover-start-time="0" hover-stay-time="140">{{item.label}}</button></view>
   <view class="form-card">
+    <view class="form-heading"><view>{{kind === 'request' || kind === 'wanted' ? '写下你的需求' : '写下你的分享'}}</view><text>* 为必填项</text></view>
     <view class="school-confirm"><text>发布学校</text><view>{{school.name}}</view></view>
     <view class="field"><view class="label">标题 <text>*</text></view><input value="{{draft.title||''}}" placeholder="{{kind==='product'?'例如：毕业出闲置台灯':kind==='wanted'?'例如：求一辆校园骑行自行车':'例如：数据库原理期末复习整理'}}" maxlength="60" data-field="title" bindinput="input" disabled="{{busy||checking}}"/></view>
     <block wx:if="{{kind==='resource'||kind==='request'}}">
@@ -24,15 +25,15 @@
     <view class="field"><view class="label">{{kind==='request'?'你需要哪方面帮助':kind==='wanted'?'物品要求与联系方式':'补充说明'}} <text>*</text></view><textarea value="{{draft.description||''}}" placeholder="{{kind==='product'?'请说明使用情况、配件和已知问题':kind==='wanted'?'说明规格、成色和预算，请勿填写敏感信息':'注明知识范围、适用课程和使用建议'}}" maxlength="{{kind==='request'||kind==='wanted'?1000:1500}}" auto-height data-field="description" bindinput="input" disabled="{{busy||checking}}"/></view>
     <block wx:if="{{kind==='resource'}}">
       <view class="field"><view class="label">资料正文</view><textarea class="body-input" value="{{draft.body||''}}" placeholder="粘贴有权分享的文字；已选择文件时可留空" maxlength="30000" auto-height data-field="body" bindinput="input" disabled="{{busy||checking}}"/><view class="field-note">文字正文与资料文件至少填写一项。</view></view>
-      <view class="upload-field"><button bindtap="chooseAttachment" disabled="{{busy||checking}}"><view class="upload-plus">＋</view><view class="upload-title">{{attachment?'重新选择资料文件':'选择资料文件'}}</view><view class="field-note">PDF / Word / Excel / PPT，不超过 5MB</view></button><view wx:if="{{attachment}}" class="selected-file"><view><text>{{attachment.name}}</text><view>{{attachment.sizeLabel}} · 发布时保存到本机</view></view><button class="remove-file" bindtap="removeAttachment" disabled="{{busy||checking}}">移除</button></view></view>
+      <view class="upload-field"><button hover-class="ui-press" bindtap="chooseAttachment" disabled="{{busy||checking}}" hover-start-time="0" hover-stay-time="140"><view class="upload-symbol"><image src="/assets/nav/library.png" mode="aspectFit" /></view><view class="upload-title">{{attachment?'重新选择资料文件':'选择资料文件'}}</view><view class="field-note">PDF / Word / Excel / PPT，不超过 5MB</view></button><view wx:if="{{attachment}}" class="selected-file"><view><text>{{attachment.name}}</text><view>{{attachment.sizeLabel}} · 发布时保存到本机</view></view><button hover-class="ui-press" class="remove-file" bindtap="removeAttachment" disabled="{{busy||checking}}" hover-start-time="0" hover-stay-time="140">移除</button></view></view>
     </block>
     <block wx:if="{{kind==='product'}}">
-      <view class="upload-field"><button bindtap="choosePhoto" disabled="{{busy||checking||photos.length>=3}}"><view class="upload-plus">＋</view><view class="upload-title">选择商品照片</view><view class="field-note">相册或拍照，自动压缩，最多 3 张，每张不超过 5MB</view></button><view wx:if="{{photos.length}}" class="photo-preview"><view wx:for="{{photos}}" wx:key="tempPath" class="photo-item"><image src="{{item.tempPath}}" mode="aspectFill" data-path="{{item.tempPath}}" bindtap="previewPhoto"/><button data-index="{{index}}" bindtap="removePhoto" disabled="{{busy||checking}}">×</button><view>{{item.sizeLabel}}</view></view></view><view class="field-note">请核对实物与照片；不选照片时会标注“暂无实物图”。</view></view>
+      <view class="upload-field"><button hover-class="ui-press" bindtap="choosePhoto" disabled="{{busy||checking||photos.length>=3}}" hover-start-time="0" hover-stay-time="140"><view class="upload-symbol"><image src="/assets/nav/market.png" mode="aspectFit" /></view><view class="upload-title">选择商品照片</view><view class="field-note">相册或拍照，自动压缩，最多 3 张，每张不超过 5MB</view></button><view wx:if="{{photos.length}}" class="photo-preview"><view wx:for="{{photos}}" wx:key="tempPath" class="photo-item"><image src="{{item.tempPath}}" mode="aspectFill" data-path="{{item.tempPath}}" bindtap="previewPhoto"/><button hover-class="ui-press" data-index="{{index}}" bindtap="removePhoto" disabled="{{busy||checking}}" aria-label="移除第{{index+1}}张照片" hover-start-time="0" hover-stay-time="140"><text>×</text></button><view>{{item.sizeLabel}}</view></view></view><view class="field-note">请核对实物与照片；不选照片时会标注“暂无实物图”。</view></view>
     </block>
     <checkbox-group class="confirmation" bindchange="changeConfirmed"><label><checkbox value="confirmed" checked="{{confirmed}}" color="#33654f" disabled="{{busy||checking}}"/><text>我确认学校和内容无误，仅分享有权发布的内容。</text></label></checkbox-group>
     <view wx:if="{{checking}}" class="field-note">正在检查文件，请稍候…</view>
     <view wx:if="{{error}}" class="error" role="alert">{{error}}</view>
-    <button class="submit" bindtap="submit" loading="{{busy||checking}}" disabled="{{busy||checking||!confirmed}}">{{busy?'正在发布…':checking?'正在检查文件…':'发布到'+school.name}}</button>
+    <button hover-class="ui-press" class="submit" bindtap="submit" loading="{{busy||checking}}" disabled="{{busy||checking||!confirmed}}" hover-start-time="0" hover-stay-time="140">{{busy?'正在发布…':checking?'正在检查文件…':'发布到'+school.name}}</button>
   </view>
   <view class="footnote">发布与文件保存在这台设备，仅用于课堂体验，不会自动同步到网站或其他同学设备。</view>
 </view>
