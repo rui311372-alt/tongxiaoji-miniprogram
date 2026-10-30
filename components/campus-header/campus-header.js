@@ -3,6 +3,7 @@ Component({
   properties: {
     schoolId: { type: String, value: 'tianjin', observer(value) { this.syncSchool(value); } },
     disabled: { type: Boolean, value: false },
+    compact: { type: Boolean, value: false },
     interceptHome: { type: Boolean, value: false }
   },
   data: { schools, index: 0, school: schools[0] },

@@ -7,10 +7,8 @@ function filterSummary(data) {
   const keyword = data.keyword.trim();
   if (keyword) add('keyword', '搜索：' + keyword);
   if (resources) {
-    if (data.activeCollection) add('collectionId', data.activeCollection.title);
     if (data.major !== '全部专业') add('major', data.major);
     if (data.course !== '全部课程') add('course', data.course);
-    if (data.ratedOnly) add('ratedOnly', '有同学评分');
     if (data.goldOnly) add('goldOnly', '平台金选');
     if (data.savedOnly) add('savedOnly', '已收藏');
   }
@@ -23,7 +21,7 @@ function filterSummary(data) {
   if (data.section === 'resources' && data.libraryTab === 'requests' && data.requestStatusIndex) {
     add('requestStatusIndex', data.requestStatusOptions[data.requestStatusIndex]);
   }
-  if (data.section === 'market' && data.marketTab !== 'products' && data.marketFilter !== 'all') {
+  if (data.section === 'market' && data.marketTab === 'wanted' && data.marketFilter !== 'all') {
     add('marketFilter', { mine: '我发布的', open: '寻找中', resolved: '已找到', active: '进行中', ended: '已结束' }[data.marketFilter]);
   }
   if ((resources || products) && data.sortIndex) add('sortIndex', data.sortOptions[data.sortIndex]);

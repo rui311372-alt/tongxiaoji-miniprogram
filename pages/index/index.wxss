@@ -1,21 +1,21 @@
-page { background: #f8f7f2; }
+page { background: #f5f7f4; }
 .entry-shell { min-height:100vh; display:flex; flex-direction:column; color:#2e513e; }
 .entry-header { display:flex; align-items:center; justify-content:space-between; gap:18rpx; padding:24rpx 32rpx; min-height:108rpx; }
 .entry-brand { display:flex; align-items:center; gap:12rpx; font-size:34rpx; font-weight:700; flex-shrink:0; }
 .entry-brand image { width:56rpx; height:56rpx; border-radius:16rpx; }
 .header-caption { font-size:23rpx; color:#6b7968; text-align:right; line-height:1.5; }
 .entry-main { width:100%; padding:0 32rpx 12rpx; }
-.entry-intro { position:relative; display:flex; align-items:center; justify-content:space-between; gap:8rpx; padding:32rpx 26rpx; margin-bottom:22rpx; border:1rpx solid #e2e8d9; border-radius:30rpx; background:linear-gradient(125deg,#edf3e8,#fcfaf3); box-shadow:inset 0 2rpx 0 #ffffffb3; overflow:hidden; }
+.entry-intro { position:relative; display:flex; align-items:center; justify-content:space-between; gap:4rpx; padding:32rpx 24rpx; margin-bottom:22rpx; border:1rpx solid #d2e2d6; border-radius:30rpx; background:#e9f1e9; overflow:hidden; }
 .intro-copy { position:relative; z-index:1; flex:1; min-width:0; }
 .intro-eyebrow { display:flex; align-items:center; gap:10rpx; font-size:23rpx; letter-spacing:2rpx; color:#647653; margin-bottom:20rpx; }
 .intro-dot { width:10rpx; height:10rpx; border-radius:50%; background:#8fa56e; flex-shrink:0; }
 .entry-title { font-size:46rpx; line-height:1.42; font-weight:700; letter-spacing:-.4rpx; color:#244a37; }
-.entry-title-accent { color:#5d784b; }
+.entry-title-accent { color:#245e4b; }
 .entry-subtitle { margin-top:18rpx; font-size:25rpx; line-height:1.7; color:#63735f; }
-.mascot-scene { position:relative; flex:0 0 200rpx; width:200rpx; height:220rpx; border-radius:50%; background:radial-gradient(ellipse,#dae6cf 0%,#edf1e100 72%); transition:transform 140ms cubic-bezier(.23,1,.32,1); }
+.mascot-scene { position:relative; flex:0 0 260rpx; width:260rpx; height:280rpx; border-radius:50%; background:radial-gradient(ellipse,#d9e9d6 0%,#edf1e100 72%); transition:transform 140ms cubic-bezier(.23,1,.32,1); }
 .mascot-pressed { transform:scale(.97); }
-.wave-viewport { width:200rpx; height:200rpx; overflow:hidden; margin-top:10rpx; }
-.wave-sprite { display:block; width:800rpx; max-width:none; height:200rpx; }
+.wave-viewport { width:260rpx; height:260rpx; overflow:hidden; margin-top:10rpx; }
+.wave-sprite { display:block; width:1040rpx; max-width:none; height:260rpx; }
 .wave-sprite.is-waving { animation:campus-wave 1.2s steps(4,end) 1; }
 @keyframes campus-wave { from { transform:translateX(0); } to { transform:translateX(-100%); } }
 .mascot-bubble { position:absolute; right:-8rpx; top:-18rpx; z-index:2; padding:12rpx 16rpx; border:1rpx solid #dce3d2; border-radius:16rpx; background:#fffefa; box-shadow:0 6rpx 20rpx #244a3710; font-size:22rpx; white-space:nowrap; }
@@ -30,17 +30,17 @@ page { background: #f8f7f2; }
 .entry-destinations { margin:24rpx 0 26rpx; }
 .entry-shell button.entry-destination { display:flex; align-items:center; width:100%; max-width:none; margin:0 0 18rpx; padding:28rpx 24rpx; min-height:142rpx; text-align:left; border-radius:26rpx; line-height:1.5; transition:transform 140ms cubic-bezier(.23,1,.32,1),opacity 140ms cubic-bezier(.23,1,.32,1); }
 .resource-entry { background:linear-gradient(115deg,#285d45,#37694f); color:#fffefa; border:1rpx solid #285d45; box-shadow:0 8rpx 24rpx #285d4514,inset 0 2rpx 0 #ffffff14; }
-.market-entry { background:#fffefa; color:#34593e; border:1rpx solid #dce4d3; box-shadow:0 4rpx 16rpx #285d4505; }
+.market-entry { background:#edf4f7; color:#2a6279; border:1rpx solid #ccdee6; }
 .entry-dest-icon { width:68rpx; height:68rpx; flex-shrink:0; border-radius:20rpx; display:flex; align-items:center; justify-content:center; background:#ffffff14; margin-right:20rpx; }
-.market-entry .entry-dest-icon { background:#eaf0e1; }
+.market-entry .entry-dest-icon { background:#ffffff; }
 .entry-dest-icon image { width:38rpx; height:38rpx; }
 .entry-dest-copy { flex:1; min-width:0; }
 .entry-dest-title { font-size:34rpx; font-weight:600; letter-spacing:.5rpx; }
 .entry-dest-note { font-size:24rpx; line-height:1.7; margin-top:7rpx; color:#e0ecd9; font-weight:400; }
-.market-entry .entry-dest-note { color:#6a7b5e; }
+.market-entry .entry-dest-note { color:#426775; }
 .entry-arrow { display:flex; align-items:center; justify-content:center; width:48rpx; height:48rpx; border-radius:50%; background:#ffffff14; font-size:32rpx; margin-left:10rpx; flex-shrink:0; }
-.market-entry .entry-arrow { background:#f0f3e9; color:#5d7952; }
-.campus-ad { position:relative; display:flex; align-items:center; justify-content:center; gap:22rpx; padding:14rpx 28rpx; border:1rpx dashed #d3dcc4; border-radius:26rpx; background:linear-gradient(110deg,#eff3e5,#f8f5eb); overflow:hidden; }
+.market-entry .entry-arrow { background:#deedf2; color:#2a6279; }
+.campus-ad { position:relative; display:flex; align-items:center; justify-content:center; gap:22rpx; padding:14rpx 28rpx; border:1rpx dashed #d9c797; border-radius:26rpx; background:#fbf3df; overflow:hidden; }
 .ad-badge { position:absolute; top:18rpx; right:20rpx; padding:2rpx 10rpx; border:1rpx solid #d9dfcd; border-radius:7rpx; font-size:20rpx; line-height:1.5; color:#78866b; }
 .ad-mascot { display:block; flex:0 0 244rpx; width:244rpx; height:244rpx; }
 .ad-copy { flex:1; min-width:0; padding:18rpx 0; }
@@ -51,9 +51,9 @@ page { background: #f8f7f2; }
 .entry-shell button.guide-link { width:auto; min-height:80rpx; margin:14rpx auto 0; padding:16rpx 12rpx; color:#64765b; background:transparent; font-size:24rpx; line-height:1.8; }
 .entry-bottom { margin-top:auto; padding:26rpx 16rpx 36rpx; padding-bottom:calc(36rpx + env(safe-area-inset-bottom)); text-align:center; color:#7e8b72; font-size:23rpx; }
 @media (max-width:350px) {
-  .mascot-scene { flex-basis:164rpx; width:164rpx; height:200rpx; }
-  .wave-viewport { width:164rpx; height:164rpx; margin-top:18rpx; }
-  .wave-sprite { width:656rpx; height:164rpx; }
+  .mascot-scene { flex-basis:228rpx; width:228rpx; height:248rpx; }
+  .wave-viewport { width:228rpx; height:228rpx; margin-top:10rpx; }
+  .wave-sprite { width:912rpx; height:228rpx; }
   .mascot-bubble { right:-12rpx; font-size:22rpx; }
 }
 @media (prefers-reduced-motion: reduce) {

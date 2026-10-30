@@ -1,13 +1,13 @@
-page { background: #f8f7f2; color: #253d32; font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; font-size: 30rpx; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+page { --campus-primary:#245e4b; --campus-ink:#1e332c; --campus-muted:#52665c; --campus-blue:#2a6279; --campus-gold:#97641a; --campus-surface:#ffffff; background: #f5f7f4; color: #1e332c; font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; font-size: 32rpx; line-height: 1.6; -webkit-font-smoothing: antialiased; }
 view, button, input, textarea, text { box-sizing: border-box; }
 button { font-size: 30rpx; border-radius: 22rpx; font-weight: 500; transition: transform 140ms cubic-bezier(0.23,1,0.32,1), opacity 140ms cubic-bezier(0.23,1,0.32,1); }
 button::after { border: 0; }
 button.button-hover, .ui-press { transform: scale(.985); opacity: .9; }
 button[disabled] { transform: none; }
 .page { padding: 32rpx 32rpx 64rpx; }
-.section-title { font-size: 36rpx; font-weight: 700; line-height: 1.4; letter-spacing: .5rpx; }
+.section-title { font-size: 38rpx; font-weight: 700; line-height: 1.4; letter-spacing: .5rpx; }
 .pill { display: inline-block; padding: 6rpx 14rpx; border-radius: 10rpx; background: #edf1e7; color: #4b674b; font-size: 24rpx; line-height: 1.5; font-weight: 500; }
-.footnote { color: #74806f; font-size: 24rpx; line-height: 1.8; text-align: center; margin: 40rpx 8rpx 0; }
+.footnote { color: #52665c; font-size: 25rpx; line-height: 1.8; text-align: center; margin: 40rpx 8rpx 0; }
 .empty { padding: 72rpx 24rpx; text-align: center; color: #79877c; line-height: 1.9; }
 .heart-icon { display:inline-block; width:34rpx; height:34rpx; flex:0 0 34rpx; vertical-align:middle; }
 .page .card-bottom button.save-icon { display:flex; align-items:center; justify-content:center; flex:0 0 72rpx; min-width:72rpx; min-height:72rpx; width:72rpx; height:72rpx; margin:0; padding:0; line-height:1; }

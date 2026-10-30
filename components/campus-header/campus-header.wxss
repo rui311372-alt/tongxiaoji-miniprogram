@@ -12,6 +12,11 @@
 .campus-header__pressed { transform:scale(.985); opacity:.9; }
 .campus-context { display: flex; align-items: center; padding: 8rpx 32rpx; gap: 10rpx; font-size: 23rpx; color: #60764f; background: #f0f3e8; line-height:1.5; }
 .campus-context__dot { width: 10rpx; height: 10rpx; flex-shrink: 0; border-radius: 50%; background: #7c9a65; }
+.campus-header--compact { min-height:88rpx; padding:8rpx 32rpx; }
+.campus-header--compact .campus-header__logo { width:48rpx; height:48rpx; border-radius:14rpx; margin-right:12rpx; }
+.campus-header--compact .campus-header__name { font-size:30rpx; }
+.campus-header--compact .campus-header__tagline { display:none; }
+.campus-header--compact .campus-header__school { padding:8rpx 16rpx; background:transparent; border-color:transparent; }
 @media (prefers-reduced-motion: reduce) {
   .campus-header__brand,.campus-header__school { transition:opacity 100ms ease-out; }
   .campus-header__pressed { transform:none; }

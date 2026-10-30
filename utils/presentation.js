@@ -35,8 +35,9 @@ function author(item) {
   if(item.isLocal) { const p=store.getProfile(), c=experience.getCredit(item.school_id); return {name:p.nickname,credit:c.score,creditLabel:c.level,isDemo:false}; }
   const p=discovery.authors[item.id];
   const name=p?p.nickname:(item.author_name || '同校同学');
-  const key=p&&p.id?p.id:item.school_id+':'+name;
-  const credits=[86,91,94,96,98,101,103,106,108,112,115,118];
-  return {name,credit:credits[sampleHash('credit:'+key)%credits.length],creditLabel:'课堂示例信用',isDemo:true};
+  // Shared group labels do not identify one contributor. Keep explicit author
+  // IDs consistent; otherwise use the resource's stable classroom fixture key.
+  const key=p&&p.id?p.id:item.author_id||item.id;
+  return {name,credit:86+sampleHash('credit:'+key)%33,creditLabel:'课堂示例信用',isDemo:true};
 }
 module.exports={getProducts,photo,money,rating,author,resourceDownloads};

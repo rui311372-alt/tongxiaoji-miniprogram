@@ -8,7 +8,19 @@
     <view class="school-confirm"><text>发布学校</text><view>{{school.name}}</view></view>
     <view class="field"><view class="label">标题 <text>*</text></view><input value="{{draft.title||''}}" placeholder="{{kind==='product'?'例如：毕业出闲置台灯':kind==='wanted'?'例如：求一辆校园骑行自行车':'例如：数据库原理期末复习整理'}}" maxlength="60" data-field="title" bindinput="input" disabled="{{busy||checking}}"/></view>
     <block wx:if="{{kind==='resource'||kind==='request'}}">
-      <view wx:if="{{kind==='resource'}}" class="field"><view class="label">适用专业 <text>*</text></view><picker range="{{majors}}" value="{{majorIndex}}" data-field="majorIndex" bindchange="select" disabled="{{busy||checking}}"><view class="picker-value">{{majors[majorIndex]}} <text>⌄</text></view></picker></view>
+      <view wx:if="{{kind==='resource'}}" class="field major-field">
+        <view class="label">适用专业 <text>*</text><text class="multi-label">可多选</text></view>
+        <button class="major-select" bindtap="toggleMajorPicker" disabled="{{busy||checking}}" hover-class="ui-press" hover-start-time="0" hover-stay-time="100"><text>{{selectedMajors.length ? '已选 ' + selectedMajors.length + ' 个专业' : '请选择适用专业'}}</text><text>{{majorPickerOpen ? '收起 ▴' : '选择 ▾'}}</text></button>
+        <view wx:if="{{selectedMajors.length}}" class="major-summary">{{majorSummary}}</view>
+        <view wx:if="{{majorPickerOpen}}" class="major-options-panel">
+          <input class="major-search" value="{{majorKeyword}}" bindinput="searchMajors" maxlength="40" placeholder="搜索专业名称" disabled="{{busy||checking}}" />
+          <scroll-view class="major-options-scroll" scroll-y style="height:{{(majorOptions.length > 4 ? 4 : (majorOptions.length || 1)) * 88}}rpx">
+            <checkbox-group bindchange="changeMajors"><label wx:for="{{majorOptions}}" wx:key="name" class="major-option {{item.checked ? 'checked' : ''}}"><checkbox value="{{item.name}}" checked="{{item.checked}}" color="#245e4b" disabled="{{busy||checking}}"/><text>{{item.name}}</text></label></checkbox-group>
+            <view wx:if="{{!majorOptions.length}}" class="major-no-match">没有匹配的专业，试试其他关键词</view>
+          </scroll-view>
+          <button class="major-done" bindtap="toggleMajorPicker" disabled="{{busy||checking}}" hover-class="ui-press" hover-start-time="0" hover-stay-time="100">完成选择 · {{selectedMajors.length}} 个</button>
+        </view>
+      </view>
       <view class="field"><view class="label">课程名称 <text>*</text></view><input value="{{draft.course||''}}" placeholder="请填写完整课程名" maxlength="50" data-field="course" bindinput="input" disabled="{{busy||checking}}"/></view>
     </block>
     <block wx:if="{{kind==='product'}}">

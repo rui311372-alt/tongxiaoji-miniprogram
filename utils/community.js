@@ -60,8 +60,15 @@ function publish(kind, data) {
   const row = { id: id(kind), school_id: school(data.school_id), title: text(data.title, '标题', 80), description: text(data.description, '内容说明', 3000), created_at: new Date().toISOString(), isLocal: true, author_name: store.getProfile().nickname, status: 'open' };
   if (kind === 'resource' || kind === 'request') {
     row.course = text(data.course, '课程', 60);
-    row.major = text(data.major, '专业', 60);
-    if (majors.indexOf(row.major) < 0) fail('请从列表选择专业。');
+    if (kind === 'resource' && data.majors !== undefined) {
+      if (!Array.isArray(data.majors) || !data.majors.length || data.majors.length > majors.length || data.majors.some(value => typeof value !== 'string' || majors.indexOf(value) < 0) || new Set(data.majors).size !== data.majors.length) fail('请从列表选择至少一个有效专业，不能重复。');
+      row.majors = data.majors.slice();
+      row.major = row.majors[0];
+    } else {
+      row.major = text(data.major, '专业', 60);
+      if (majors.indexOf(row.major) < 0) fail('请从列表选择专业。');
+      if (kind === 'resource') row.majors = [row.major];
+    }
   }
   if (kind === 'resource') {
     if (resourceCategories.indexOf(data.category) < 0) fail('请选择资料分类。');

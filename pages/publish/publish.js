@@ -9,13 +9,15 @@ function dateValue(date) { return date.getFullYear() + '-' + pad(date.getMonth()
 function timeValue(date) { return pad(date.getHours()) + ':' + pad(date.getMinutes()); }
 function defaults() { const now = new Date(), tomorrow = new Date(Date.now() + 86400000); return { dateMin: dateValue(now), dateMax: dateValue(new Date(Date.now() + 15 * 86400000)), endDate: dateValue(tomorrow), endTime: timeValue(tomorrow) }; }
 function sizeLabel(size) { return size >= 1024 * 1024 ? (size / 1024 / 1024).toFixed(1) + ' MB' : (size / 1024).toFixed(1) + ' KB'; }
+function majorOptions(selected, keyword) { return majors.filter(name => !keyword || name.toLowerCase().includes(keyword.toLowerCase().trim())).map(name => ({ name, checked: selected.includes(name) })); }
+function majorSelection() { const selectedMajors = [majors[0]]; return { selectedMajors, majorOptions: majorOptions(selectedMajors, ''), majorPickerOpen: false, majorKeyword: '', majorSummary: selectedMajors.join('、') }; }
 function draftSnapshot(data) {
   const draft = {};
   Object.keys(data.draft).sort().forEach(key => { const value = String(data.draft[key] || '').trim(); if (value) draft[key] = value; });
-  return JSON.stringify({ draft, majorIndex: data.majorIndex, categoryIndex: data.categoryIndex, conditionIndex: data.conditionIndex, saleModeIndex: data.saleModeIndex, photos: data.photos.map(row => row.tempPath), attachment: data.attachment && data.attachment.tempPath, endDate: data.endDate, endTime: data.endTime });
+  return JSON.stringify({ draft, majorIndex: data.majorIndex, selectedMajors: data.kind === 'resource' ? data.selectedMajors.slice().sort() : [], categoryIndex: data.categoryIndex, conditionIndex: data.conditionIndex, saleModeIndex: data.saleModeIndex, photos: data.photos.map(row => row.tempPath), attachment: data.attachment && data.attachment.tempPath, endDate: data.endDate, endTime: data.endTime });
 }
 Page({
-  data: { school: schools[0], tabs, kind: 'resource', majors, majorIndex: 0, categories: community.resourceCategories, categoryIndex: 0, conditions: community.conditions, conditionIndex: 0, saleModes: ['固定价格', '校园竞价'], saleModeIndex: 0, draft: { increment: '5' }, photos: [], attachment: null, confirmed: false, busy: false, checking: false, error: '', dateMin: '', dateMax: '', endDate: '', endTime: '' },
+  data: { school: schools[0], tabs, kind: 'resource', majors, majorIndex: 0, ...majorSelection(), categories: community.resourceCategories, categoryIndex: 0, conditions: community.conditions, conditionIndex: 0, saleModes: ['固定价格', '校园竞价'], saleModeIndex: 0, draft: { increment: '5' }, photos: [], attachment: null, confirmed: false, busy: false, checking: false, error: '', dateMin: '', dateMax: '', endDate: '', endTime: '' },
   onLoad(options) {
     this._disposed = false; this._generation = 0; this._pendingPaths = []; this.setData(defaults());
     if (tabs.some(row => row.id === options.kind)) this.chooseKind(options.kind);
@@ -36,13 +38,13 @@ Page({
   },
   chooseKind(kind) {
     this._generation++;
-    this.setData(Object.assign({ kind, draft: { increment: '5' }, majorIndex: 0, categoryIndex: 0, conditionIndex: 0, saleModeIndex: 0, photos: [], attachment: null, confirmed: false, error: '', categories: kind === 'product' || kind === 'wanted' ? community.productCategories : community.resourceCategories }, defaults()));
+    this.setData(Object.assign({ kind, draft: { increment: '5' }, majorIndex: 0, categoryIndex: 0, conditionIndex: 0, saleModeIndex: 0, photos: [], attachment: null, confirmed: false, error: '', categories: kind === 'product' || kind === 'wanted' ? community.productCategories : community.resourceCategories }, majorSelection(), defaults()));
     this._draftBaseline = draftSnapshot(this.data);
   },
   changeKind(event) {
     if (this.data.busy || this.data.checking || event.currentTarget.dataset.kind === this.data.kind) return;
     const kind = event.currentTarget.dataset.kind;
-    const changed = Object.keys(this.data.draft).some(key => key !== 'increment' && String(this.data.draft[key]).trim()) || this.data.photos.length || this.data.attachment;
+    const changed = this.hasUnsavedChanges();
     if (!changed) { this.chooseKind(kind); return; }
     wx.showModal({ title: '切换发布类型', content: '当前未发布内容将清空，是否继续？', success: result => { if (result.confirm && !this._disposed) this.chooseKind(kind); } });
   },
@@ -51,6 +53,15 @@ Page({
     const key = event.currentTarget.dataset.field;
     if (this.data.busy || this.data.checking || ['majorIndex', 'categoryIndex', 'conditionIndex', 'saleModeIndex'].indexOf(key) < 0) return;
     this.setData({ [key]: Number(event.detail.value), confirmed: false });
+  },
+  toggleMajorPicker() { if (!this.data.busy && !this.data.checking) this.setData({ majorPickerOpen: !this.data.majorPickerOpen }); },
+  searchMajors(event) { if (!this.data.busy && !this.data.checking) { const majorKeyword = String(event.detail.value || '').slice(0, 40); this.setData({ majorKeyword, majorOptions: majorOptions(this.data.selectedMajors, majorKeyword) }); } },
+  changeMajors(event) {
+    if (this.data.busy || this.data.checking || !Array.isArray(event.detail.value)) return;
+    const visible = this.data.majorOptions.map(option => option.name);
+    const checked = event.detail.value.filter(name => visible.includes(name));
+    const selectedMajors = majors.filter(name => checked.includes(name) || this.data.selectedMajors.includes(name) && !visible.includes(name));
+    this.setData({ selectedMajors, majorOptions: majorOptions(selectedMajors, this.data.majorKeyword), majorSummary: selectedMajors.join('、'), confirmed: false });
   },
   changeDate(event) { if (!this.data.busy) this.setData({ endDate: event.detail.value, confirmed: false }); },
   changeTime(event) { if (!this.data.busy) this.setData({ endTime: event.detail.value, confirmed: false }); },
@@ -87,6 +98,10 @@ Page({
       if (this._disposed) throw new Error('页面已关闭，发布未保存。');
       const { kind, draft, school, majors, majorIndex, categories, categoryIndex, conditions, conditionIndex, saleModeIndex, endDate, endTime } = this.data;
       const data = Object.assign({}, draft, { school_id: school.id, major: majors[majorIndex], category: categories[categoryIndex], condition: conditions[conditionIndex] });
+      if (kind === 'resource') {
+        if (!this.data.selectedMajors.length || this.data.selectedMajors.some(name => !majors.includes(name))) throw new Error('请选择至少一个适用专业。');
+        data.majors = this.data.selectedMajors.slice(); data.major = data.majors[0];
+      }
       if (kind === 'resource' && !draft.body && !this.data.attachment) throw new Error('请填写资料正文，或选择一份资料文件。');
       if (kind === 'wanted') {
         if (!draft.budget || !/^\d+(\.\d{1,2})?$/.test(draft.budget) || Number(draft.budget) <= 0 || Number(draft.budget) > 99999) throw new Error('最高预算请输入 0.01—99999 元，最多两位小数。');
@@ -111,7 +126,7 @@ Page({
       }
       if (this._disposed) throw new Error('页面已关闭，发布未保存。');
       community.publish(kind, data); committed = true; this._pendingPaths = [];
-      this.setData({ draft: { increment: '5' }, photos: [], attachment: null, confirmed: false, busy: false });
+      this.setData(Object.assign({ draft: { increment: '5' }, photos: [], attachment: null, confirmed: false, busy: false }, majorSelection()));
       this._draftBaseline = draftSnapshot(this.data);
       wx.showToast({ title: '已发布到本机', icon: 'success' });
       const section = kind === 'resource' || kind === 'request' ? 'resources' : 'market';

@@ -1,15 +1,12 @@
-.messages-page { padding-bottom: 28rpx; }
-.heading { display: flex; align-items: center; justify-content: space-between; gap:16rpx; margin: 4rpx 0 28rpx; }
+.messages-page { padding-top:28rpx; padding-bottom: 28rpx; }
+.heading { display: flex; align-items: center; justify-content: space-between; gap:16rpx; margin: 0 0 24rpx; }
 .heading > view:first-child { flex:1; min-width:0; }
-.heading-eyebrow { font-size:24rpx; letter-spacing:1rpx; color:#6d806c; margin-bottom:10rpx; }
-.school-name { max-width:36%; padding:8rpx 14rpx; border:1rpx solid #e0e6d8; border-radius:18rpx; background:#edf2e7; color:#536f53; font-size:25rpx; flex-shrink:0; line-height:1.6; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.conversation-tools,.manage-actions { display:flex; align-items:center; justify-content:space-between; gap:18rpx; }
-.conversation-tools { min-height:72rpx; margin-bottom:18rpx; }
-.conversation-count { flex:1; min-width:0; color:#697c69; font-size:25rpx; }
-.messages-page .manage-actions button { width:auto; min-width:88rpx; max-width:none; min-height:72rpx; margin:0; padding:17rpx 18rpx; border-radius:18rpx; font-size:25rpx; line-height:1.5; }
-.manage-toggle { color:#365d44; background:#e9f0e2; border:1rpx solid #dce5d5; }
+.conversation-tools { display:flex; align-items:center; justify-content:space-between; gap:18rpx; margin:-8rpx 0 18rpx; }
+.messages-page button.manage-toggle,.messages-page button.clear-threads { width:auto; min-width:96rpx; max-width:none; min-height:88rpx; margin:0; padding:22rpx 20rpx; border-radius:18rpx; font-size:27rpx; line-height:1.5; }
+.manage-toggle { color:#245e4b; background:#e5efe8; border:1rpx solid #cbdfd2; }
+.manage-toggle[disabled] { color:#718177; background:#edf0ed; border-color:#dfe5df; }
 .clear-threads { color:#995c4c; background:transparent; }
-.manage-hint { color:#6e7d6c; font-size:24rpx; line-height:1.7; margin:-6rpx 0 20rpx; }
+.manage-hint { color:#52665c; font-size:26rpx; line-height:1.7; }
 .action-error { color:#a13e27; background:#fff0e8; border-radius:16rpx; padding:20rpx; font-size:25rpx; line-height:1.7; margin-bottom:18rpx; }
 .empty-card { background: #fffefa; border: 1rpx solid #e3e8da; border-radius: 28rpx; padding: 48rpx 32rpx 44rpx; text-align: center; margin-top: 32rpx; box-shadow:0 8rpx 28rpx #2d493405; }
 .empty-mascot { width:180rpx; height:180rpx; margin:0 auto; overflow:hidden; border-radius:50%; background:radial-gradient(ellipse,#edf2e2,#fffefa); }
@@ -19,7 +16,7 @@
 .messages-page .empty-card button { background: #33654f; color: white; margin:32rpx auto 0; width:100%; max-width:480rpx; min-width:0; padding:22rpx 24rpx; min-height:88rpx; line-height:1.5; font-size:28rpx; border-radius:24rpx; }
 .empty-card button text { margin-left:18rpx; }
 .thread-list { display:flex; flex-direction:column; gap:16rpx; }
-.thread-row { display:flex; align-items:center; border:1rpx solid #e3e8da; border-radius:26rpx; overflow:hidden; background:#fffefa; box-shadow:0 6rpx 22rpx #2d493404; }
+.thread-row { display:flex; align-items:center; border:1rpx solid #d6e2d9; border-radius:24rpx; overflow:hidden; background:#ffffff; }
 /* Override style v2's button:not([size=mini]) width and padding. */
 .messages-page .thread {
   display: flex;
@@ -48,9 +45,8 @@
 .thread-content { min-width: 0; flex: 1; }
 .thread-head { display:flex; align-items:center; gap:12rpx; }
 .thread-title { min-width: 0; font-weight: 600; font-size: 31rpx; flex: 1; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
-.thread-time { max-width:168rpx; color:#6f7d6a; font-size:22rpx; flex-shrink:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-variant-numeric:tabular-nums; }
-.last-message { font-size: 28rpx; color: #68785f; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 8rpx; }
-.conversation-school { font-size:24rpx; color:#6e7e69; margin-top:7rpx; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.thread-time { max-width:168rpx; color:#52665c; font-size:24rpx; flex-shrink:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-variant-numeric:tabular-nums; }
+.last-message { font-size: 28rpx; color: #52665c; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 12rpx; }
 .arrow { color: #88947d; font-size: 35rpx; flex: 0 0 18rpx; margin-left: 14rpx; text-align: right; }
 .error { padding: 30rpx; color: #a13e27; line-height: 1.7; }
 .error button { margin-top: 20rpx; color: #33654f; background: #e9efdf; }

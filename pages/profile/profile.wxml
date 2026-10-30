@@ -4,6 +4,7 @@
     <image class="profile-portrait" src="{{profileInfo.avatar || '/assets/icon.png'}}" mode="aspectFill" />
     <view class="profile-summary-copy"><view class="profile-summary-name">{{profileInfo.nickname}}</view><view class="profile-summary-meta">{{school.name}} · {{profileInfo.major}}</view><text class="pill">{{profileInfo.demo_verified ? '已完成演示认证' : '尚未完成演示认证'}}</text></view>
     <button hover-class="ui-press" class="edit-profile" bindtap="toggleEditor" disabled="{{saving}}" hover-start-time="0" hover-stay-time="140">{{editing ? '收起' : '编辑资料'}}</button>
+    <view class="profile-credit {{credit && credit.score > 100 ? 'is-gold' : ''}}"><text>校园信用</text><text class="profile-credit-score">{{credit ? credit.score : '—'}}</text><text>分</text></view>
   </view>
   <view wx:if="{{loadError}}" class="error-card">{{loadError}}<button hover-class="ui-press" bindtap="reloadProfile" hover-start-time="0" hover-stay-time="140">重新读取资料</button></view>
   <view wx:if="{{editing}}" class="editor-card">
@@ -14,12 +15,11 @@
     <checkbox-group bindchange="changeVerification"><label class="verification-label"><checkbox value="verified" checked="{{demoVerified}}" color="#2c624c" disabled="{{saving || !canSave}}" /><view>完成校园身份演示认证<text>仅演示流程，不提交真实学号或证件。</text></view></label></checkbox-group>
     <button hover-class="ui-press" class="save-button" bindtap="save" loading="{{saving}}" disabled="{{saving || !canSave}}" hover-start-time="0" hover-stay-time="140">{{saving ? '正在保存' : '保存资料'}}</button><view class="save-status">{{saveHint}}</view>
   </view>
-  <button hover-class="ui-press" class="credit-shortcut" data-tab="credit" bindtap="changeTab" disabled="{{saving || calendarBusy || navigating}}" hover-start-time="0" hover-stay-time="140"><view class="credit-shield">✓</view><view class="credit-shortcut-copy"><view>校园信用 <text>{{credit ? credit.score : '—'}}</text></view><view class="muted">{{experienceError ? '信用记录读取失败，请重试' : credit ? credit.level : '读取本机信用记录'}} · 查看规则与每次变动</view></view><text class="chevron">›</text></button>
   <view class="profile-stats">
-    <button hover-class="ui-press" class="stat-button" data-tab="posts" bindtap="changeTab" disabled="{{saving || calendarBusy || navigating}}" hover-start-time="0" hover-stay-time="140"><text class="stat-icon">↑</text><text class="stat-number">{{dataError ? '—' : counts.posts}}</text><text>本校发布</text></button>
-    <button hover-class="ui-press" class="stat-button" data-tab="saved" bindtap="changeTab" disabled="{{saving || calendarBusy || navigating}}" hover-start-time="0" hover-stay-time="140"><view class="stat-icon"><image class="stat-heart" src="/assets/nav/heart-outline.png" mode="aspectFit" /></view><text class="stat-number">{{favoritesError ? '—' : counts.saved}}</text><text>本校收藏</text></button>
-    <button hover-class="ui-press" class="stat-button" data-tab="orders" bindtap="changeTab" disabled="{{saving || calendarBusy || navigating}}" hover-start-time="0" hover-stay-time="140"><text class="stat-icon">◷</text><text class="stat-number">{{experienceError ? '—' : counts.pending}}</text><text>待见面预约</text></button>
-    <button hover-class="ui-press" class="stat-button" data-tab="history" bindtap="changeTab" disabled="{{saving || calendarBusy || navigating}}" hover-start-time="0" hover-stay-time="140"><text class="stat-icon">↶</text><text class="stat-number">{{experienceError ? '—' : counts.history}}</text><text>本校足迹</text></button>
+    <view class="stat-item"><text class="stat-number">{{dataError ? '—' : counts.posts}}</text><text>本校发布</text></view>
+    <view class="stat-item"><text class="stat-number">{{favoritesError ? '—' : counts.saved}}</text><text>本校收藏</text></view>
+    <view class="stat-item"><text class="stat-number">{{experienceError ? '—' : counts.pending}}</text><text>待见面预约</text></view>
+    <view class="stat-item"><text class="stat-number">{{experienceError ? '—' : counts.history}}</text><text>本校足迹</text></view>
   </view>
   <view class="local-note">认证流程仅作展示，不核验真实在校身份。请勿填写真实学号、证件或密码。</view>
   <scroll-view scroll-x="{{true}}" class="mine-tabs" enhanced="{{true}}" show-scrollbar="{{false}}"><view class="mine-tabs-inner"><button hover-class="ui-press" wx:for="{{tabs}}" wx:key="id" class="mine-tab {{mineTab === item.id ? 'active' : ''}}" data-tab="{{item.id}}" bindtap="changeTab" disabled="{{saving}}" hover-start-time="0" hover-stay-time="140">{{item.label}}</button></view></scroll-view>

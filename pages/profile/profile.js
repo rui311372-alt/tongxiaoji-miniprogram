@@ -1,5 +1,6 @@
 const { schools } = require('../../utils/catalog');
 const community = require('../../utils/community');
+const { getResourceMajors } = require('../../utils/resource-majors');
 const { majors } = require('../../utils/majors');
 const store = require('../../utils/store');
 const photoMap = require('../../utils/photo-map');
@@ -132,7 +133,7 @@ Page({
       const favorites = store.getFavorites(this.data.school.id).map(row => {
         const item = (row.section === 'resources' ? resources : products).find(item => item.id === row.id && item.school_id === row.schoolId);
         if (!item) return null;
-        return Object.assign({}, row, { key: row.section + ':' + row.id, title: item.title, image: imagePath(item.image), label: row.section === 'resources' ? '学习资料' : '二手闲置', subtitle: row.section === 'resources' ? item.course + ' · ' + item.major : '¥' + money(item.price_cents) + ' · ' + item.condition });
+        return Object.assign({}, row, { key: row.section + ':' + row.id, title: item.title, image: imagePath(item.image), label: row.section === 'resources' ? '学习资料' : '二手闲置', subtitle: row.section === 'resources' ? item.course + ' · ' + getResourceMajors(item).join('、') : '¥' + money(item.price_cents) + ' · ' + item.condition });
       }).filter(Boolean);
       this.setData({ favorites, favoritesError: '', 'counts.saved': favorites.length, favoriteKinds: [{ id: 'all', label: '全部', count: favorites.length }, { id: 'resources', label: '学习资料', count: favorites.filter(row => row.section === 'resources').length }, { id: 'market', label: '二手闲置', count: favorites.filter(row => row.section === 'market').length }] });
       this.filterFavorites();
@@ -145,7 +146,7 @@ Page({
       const schoolId = this.data.school.id;
       const groups = [{ rows: community.getResources(), kind: 'resource', label: '学习资料', section: 'resources' }, { rows: community.getProducts(), kind: 'product', label: '二手闲置', section: 'market' }, { rows: community.getRequests(), kind: 'request', label: '求资料', section: 'requests' }, { rows: community.getWanted(), kind: 'wanted', label: '求闲置', section: 'wanted' }];
       const posts = [];
-      groups.forEach(group => group.rows.filter(row => row.isLocal && row.school_id === schoolId).forEach(row => posts.push(Object.assign({}, row, { key: group.kind + ':' + row.id, kind: group.kind, section: group.section, label: group.label, image: imagePath(row.image), timeLabel: dateText(row.created_at), subtitle: group.kind === 'resource' ? row.course + ' · ' + row.major : group.kind === 'product' ? '¥' + money(row.price_cents) + ' · ' + row.condition + (row.sale_mode === 'auction' ? ' · 拍卖' : '') : row.description, statusLabel: row.status === 'resolved' ? '已解决' : row.status === 'closed' ? '已结束' : '已发布' }))));
+      groups.forEach(group => group.rows.filter(row => row.isLocal && row.school_id === schoolId).forEach(row => posts.push(Object.assign({}, row, { key: group.kind + ':' + row.id, kind: group.kind, section: group.section, label: group.label, image: imagePath(row.image), timeLabel: dateText(row.created_at), subtitle: group.kind === 'resource' ? row.course + ' · ' + getResourceMajors(row).join('、') : group.kind === 'product' ? '¥' + money(row.price_cents) + ' · ' + row.condition + (row.sale_mode === 'auction' ? ' · 拍卖' : '') : row.description, statusLabel: row.status === 'resolved' ? '已解决' : row.status === 'closed' ? '已结束' : '已发布' }))));
       posts.sort((a, b) => new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime());
       this.setData({ posts, dataError: '', 'counts.posts': posts.length });
     } catch (error) { this.setData({ posts: [], 'counts.posts': 0, dataError: error.message || '发布记录读取失败，请重试。' }); }

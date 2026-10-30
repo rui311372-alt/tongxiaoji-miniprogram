@@ -1,5 +1,5 @@
-<view class="campus-header">
+<view class="campus-header {{compact ? 'campus-header--compact' : ''}}">
   <view class="campus-header__brand" bindtap="returnHome" hover-class="campus-header__pressed" hover-start-time="0" hover-stay-time="100" aria-role="button" aria-label="返回同校集首页"><image class="campus-header__logo" src="/assets/icon.png" mode="aspectFit" /><view class="campus-header__copy"><view class="campus-header__name">同校集</view><view class="campus-header__tagline">同校分享，刚好需要</view></view></view>
   <picker class="campus-header__picker" range="{{schools}}" range-key="name" value="{{index}}" bindchange="chooseSchool" disabled="{{disabled}}"><view class="campus-header__school" hover-class="campus-header__pressed" hover-start-time="0" hover-stay-time="100" aria-label="{{'当前学校：' + school.name + '，点击切换'}}"><text class="campus-header__school-name">{{school.name}}</text><text class="campus-header__arrow">⌄</text></view></picker>
 </view>
-<view class="campus-context"><view class="campus-context__dot" /><text>{{school.name}}</text></view>
+<view wx:if="{{!compact}}" class="campus-context"><view class="campus-context__dot" /><text>{{school.name}}</text></view>

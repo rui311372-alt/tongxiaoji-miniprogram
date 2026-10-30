@@ -1,22 +1,18 @@
 .profile-page { padding-top: 4rpx; padding-bottom: 64rpx; }
-.profile-summary { display: flex; align-items: center; gap: 18rpx; padding: 28rpx 24rpx; margin-bottom: 22rpx; border: 1rpx solid #dfe7d9; border-radius: 28rpx; background: linear-gradient(120deg,#fffefa 30%,#eef3e9 100%); box-shadow: 0 7rpx 24rpx rgba(46,70,48,.035); }
+.profile-summary { position:relative; display: flex; align-items: center; gap: 18rpx; padding: 28rpx 24rpx 60rpx; margin-bottom: 18rpx; border: 1rpx solid #cfdfd5; border-radius: 28rpx; background: #ffffff; box-shadow: 0 7rpx 24rpx rgba(36,94,75,.04); }
 .profile-portrait { width: 104rpx; height: 104rpx; flex: none; border-radius: 30rpx; background: #edf1e5; border: 5rpx solid #fffefa; box-shadow: 0 4rpx 12rpx rgba(50,80,56,.09); }
-.profile-summary-copy { flex: 1; min-width: 0; color: #70826e; font-size: 26rpx; line-height: 1.65; }
+.profile-summary-copy { flex: 1; min-width: 0; color: #52665c; font-size: 26rpx; line-height: 1.65; }
 .profile-summary-name { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; color: #294b3c; font-size: 36rpx; font-weight: 700; word-break: break-all; line-height: 1.4; margin-bottom: 9rpx; }
 .profile-summary-copy .pill { margin-top: 8rpx; font-size: 24rpx; padding: 5rpx 11rpx; background: #e9f0df; color: #5b7850; }
-.profile-page button.edit-profile { width: auto; min-width: 104rpx; min-height: 72rpx; margin: 0; padding: 16rpx 14rpx; flex: none; color: #4f755a; background: #fffefa; font-size: 25rpx; line-height: 1.6; white-space: nowrap; align-self: flex-start; border: 1rpx solid #d5e1cd; border-radius: 14rpx; }
-.credit-shortcut { display: flex; align-items: center; gap: 20rpx; text-align: left; background: #edf3e7; border: 1rpx solid #dce6d4; padding: 22rpx 24rpx; border-radius: 26rpx; }
-.profile-page button.credit-shortcut { width: 100%; margin: 0; }
-.credit-shield { width: 62rpx; height: 68rpx; border-radius: 20rpx 20rpx 28rpx 28rpx; display: flex; align-items: center; justify-content: center; flex: none; background: #dce8cf; color: #386449; font-size: 40rpx; font-weight: 700; }
-.credit-shortcut-copy { flex: 1; min-width: 0; font-size: 30rpx; color: #365e44; line-height: 1.6; font-weight: 600; }
-.credit-shortcut-copy>view>text { margin-left: 10rpx; font-size: 38rpx; font-weight: 750; color: #2e6149; }
-.credit-shortcut-copy .muted { font-weight: 400; font-size: 25rpx; line-height: 1.7; }
+.profile-page button.edit-profile { width: auto; min-width: 104rpx; min-height: 88rpx; margin: 0; padding: 23rpx 14rpx; flex: none; color: #245e4b; background: #f0f6f1; font-size: 25rpx; line-height: 1.6; white-space: nowrap; align-self: flex-start; border: 1rpx solid #c9ddcf; border-radius: 16rpx; }
+.profile-credit { position:absolute; right:24rpx; bottom:16rpx; display:flex; align-items:baseline; gap:8rpx; padding:7rpx 14rpx; border-radius:12rpx; background:#e8f1ec; color:#245e4b; font-size:24rpx; line-height:1.5; }
+.profile-credit-score { font-size:29rpx; font-weight:700; font-variant-numeric:tabular-nums; }
+.profile-credit.is-gold { background:#fff2d6; color:#97641a; }
 .chevron { font-size: 40rpx; color: #839b79; flex: none; }
-.profile-stats { display: flex; background: #fffefa; border: 1rpx solid #e1e6dc; border-radius: 26rpx; padding: 24rpx 6rpx; margin-top: 22rpx; }
-.profile-page button.stat-button { display: flex; flex: 1; min-width: 0; flex-direction: column; align-items: center; gap: 8rpx; width: auto; margin: 0; padding: 0 4rpx; line-height: 1.6; background: none; color: #6d806b; font-size: 24rpx; border-radius: 0; white-space: nowrap; }
-.stat-button+.stat-button { border-left: 2rpx solid #edf0e5; }
-.stat-icon { color: #6a8b57; font-size: 34rpx; height: 42rpx; line-height: 42rpx; display: flex; align-items: center; justify-content: center; }
-.stat-number { max-width: 100%; overflow: hidden; text-overflow: ellipsis; font-size: 39rpx; color: #355542; font-weight: 700; line-height: 1.3; font-variant-numeric: tabular-nums; }
+.profile-stats { display: flex; background: #edf3ef; border: 1rpx solid #d8e4dc; border-radius: 20rpx; padding: 16rpx 4rpx; margin-top: 0; }
+.stat-item { display:flex; flex:1; min-width:0; flex-direction:column; align-items:center; gap:4rpx; padding:0 4rpx; color:#52665c; font-size:23rpx; line-height:1.55; white-space:nowrap; }
+.stat-item+.stat-item { border-left:1rpx solid #cadbd0; }
+.stat-number { max-width: 100%; overflow: hidden; text-overflow: ellipsis; font-size: 32rpx; color: #245e4b; font-weight: 650; line-height: 1.3; font-variant-numeric: tabular-nums; }
 .local-note { color: #6e7d70; font-size: 24rpx; line-height: 1.8; margin: 20rpx 0; }
 .mine-tabs { background: #ecefe6; border-radius: 26rpx; overflow: hidden; margin: 26rpx 0 28rpx; white-space: nowrap; border: 1rpx solid #dfe5d6; }
 .mine-tabs-inner { display: flex; min-width: 100%; padding: 7rpx; gap: 2rpx; box-sizing: border-box; }
@@ -165,7 +161,6 @@
 .profile-page button.order-area-tab[disabled] { opacity: .65; }
 .profile-page button.outline-button[disabled],.profile-page button.primary-button[disabled] { opacity: .65; }
 .profile-summary-meta { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; word-break: break-all; line-height: 1.7; }
-.stat-heart { display: block; width: 34rpx; height: 34rpx; }
 .record-symbol > image { display: block; width: 38rpx; height: 38rpx; }
 .record-symbol > text { color: #769065; font-size: 24rpx; line-height: 1.3; }
 .item-image-fallback > image { width: 44rpx; height: 44rpx; }
